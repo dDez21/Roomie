@@ -13,7 +13,6 @@
     <style name="TitleBoxStyle" parent="TextAppearance.Material3.TitleLarge">
         <item name="android:fontFamily">@font/roboto</item>
         <item name="android:textColor">@color/onSurfaceColor</item>
-        <item name="android:textStyle">bold</item>
     </style>
 
 
@@ -24,10 +23,11 @@
     </style>
 
 
-<!--    testo secondario o note dentro card, in generale testo "di servizio"-->
-    <style name="Body2BoxStyle" parent="TextAppearance.Material3.BodySmall">
+<!--    stile dati in alto -->
+    <style name="userStyle" parent="TextAppearance.Material3.BodyLarge">
         <item name="android:fontFamily">@font/inter</item>
-        <item name="android:textColor">@color/onSurfaceColor</item>
+        <item name="android:textColor">@color/onBackgroundColor</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
 
