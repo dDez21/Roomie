@@ -1,0 +1,29 @@
+<com.google.android.material.card.MaterialCardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="12dp">
+
+            <TextView
+                android:id="@+id/actionTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Azione eseguita"
+                android:textSize="16sp"
+                android:textColor="@android:color/black"/>
+
+            <TextView
+                android:id="@+id/actionDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="10 ottobre 2025, 15:42"
+                android:textSize="12sp"/>
+
+        </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

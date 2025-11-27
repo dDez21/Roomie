@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/register"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:theme="@style/Theme.Roomie"
+    tools:ignore="ExtraText">
+    <!--tools:context=".activity.RegisterActivity">-->
+
+
+    <!-- freccia indietro -->
+    <ImageButton
+        style="@style/ArrowBack"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+
+    <!-- logo app -->
+    <ImageView
+        android:id="@+id/starting_logo"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:contentDescription="@string/app_name"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/logo"
+        app:layout_constraintVertical_bias="0.15"/>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/username"
+        style="@style/TextInputStyle"
+        android:hint="@string/UserName"
+        app:errorEnabled="true"
+        app:layout_constraintTop_toBottomOf="@+id/starting_logo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints="username"
+            android:imeOptions="actionNext"
+            android:inputType="textPersonName"
+            android:drawableStart="@drawable/user_icon"
+            android:drawablePadding="5dp"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/addIcon"
+        style="@style/logoImageFAB"
+        app:layout_constraintTop_toBottomOf="@+id/username"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:backgroundTint="@color/surfaceColor"
+        app:tint="@null"/>
+
+
+    <!-- email -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/Email"
+        android:hint="@string/Email"
+        style="@style/TextInputStyle"
+        app:errorEnabled="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addIcon"
+        android:layout_marginTop="15dp">
+
+        <!-- testo dentro email -->
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints="emailAddress"
+            android:imeOptions="actionNext"
+            android:inputType="textEmailAddress"
+            android:drawableStart="@drawable/email"
+            android:drawablePadding="5dp"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <!-- password -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/Password"
+        android:hint="@string/Password"
+        style="@style/TextInputStyle"
+        app:errorEnabled="true"
+        app:layout_constraintTop_toBottomOf="@+id/Email"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:endIconMode="password_toggle">
+
+        <!-- testo password -->
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints="emailAddress"
+            android:imeOptions="actionNext"
+            android:inputType="textEmailAddress"
+            android:drawableStart="@drawable/locker"
+            android:drawablePadding="5dp"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <!-- bottone invio -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/CreateAccount"
+        style="@style/Button"
+        android:text="@string/CreateAccount"
+        app:layout_constraintTop_toBottomOf="@+id/Password"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="10dp"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

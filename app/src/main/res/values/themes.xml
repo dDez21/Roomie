@@ -1,0 +1,35 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="Theme.Roomie" parent="Theme.Material3.Light.NoActionBar">
+        <item name="colorPrimary">@color/primaryColor</item>
+        <item name="colorOnPrimary">@color/onPrimaryColor</item>
+        <item name="colorPrimaryContainer">@color/primaryContainerColor</item>
+        <item name="colorOnPrimaryContainer">@color/onPrimaryContainerColor</item>
+        <item name="colorSecondary">@color/secondaryColor</item>
+        <item name="colorOnSecondary">@color/onSecondaryColor</item>
+        <item name="colorSecondaryContainer">@color/secondaryContainerColor</item>
+        <item name="colorOnSecondaryContainer">@color/onSecondaryContainerColor</item>
+        <item name="colorTertiary">@color/tertiaryColor</item>
+        <item name="colorOnTertiary">@color/onTertiaryColor</item>
+        <item name="colorTertiaryContainer">@color/tertiaryContainerColor</item>
+        <item name="colorOnTertiaryContainer">@color/onTertiaryContainerColor</item>
+        <item name="colorSurface">@color/surfaceColor</item>
+        <item name="colorOnSurface">@color/onSurfaceColor</item>
+        <item name="colorSurfaceContainer">@color/surfaceContainerColor</item>
+        <item name="colorSurfaceVariant">@color/surfaceVariantColor</item>
+        <item name="colorError">@color/errorColor</item>
+        <item name="colorOnError">@color/onErrorColor</item>
+        <item name="colorErrorContainer">@color/errorContainerColor</item>
+        <item name="colorOnErrorContainer">@color/onErrorContainerColor</item>
+        <item name="colorOutline">@color/outlineColor</item>
+        <item name="colorOutlineVariant">@color/outlineVariantColor</item>
+        <item name="colorSurfaceInverse">@color/surfaceInverseColor</item>
+        <item name="colorOnSurfaceInverse">@color/onSurfaceInverseColor</item>
+        <item name="colorPrimaryInverse">@color/primaryInverseColor</item>
+        <item name="android:colorBackground">@color/backgroundColor</item>
+        <item name="colorOnBackground">@color/onBackgroundColor</item>
+        <item name="elevationOverlayEnabled">false</item>
+        <item name="materialButtonStyle">@style/Button</item>
+        <item name="materialCardViewStyle">@style/ElevatedCard</item>
+        <item name="textInputOutlinedStyle">@style/TextInputStyle</item>
+    </style>
+</resources>

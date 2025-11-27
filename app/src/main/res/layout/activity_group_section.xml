@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/group_section"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:theme="@style/Theme.Roomie">
+
+
+    <!-- menu in alto -->
+    <include
+        layout="@layout/top_bar"
+        android:id="@+id/top_bar"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+
+    <!-- selezione opzione gruppi -->
+    <LinearLayout
+        android:id="@+id/buttonContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@+id/top_bar"
+        android:layout_marginTop="20dp">
+
+
+        <!-- crea gruppo -->
+        <Button
+            android:id="@+id/newGroup"
+            style="@style/buttonGroup"
+            android:text="@string/newGroup"/>
+
+
+        <!-- vedi richieste gruppi -->
+        <Button
+            android:id="@+id/seeRequests"
+            style="@style/buttonGroup"
+            android:text="@string/seeRequests"
+            android:layout_marginTop="5dp"/>
+    </LinearLayout>
+
+
+    <!-- aggiungi elementi -->
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

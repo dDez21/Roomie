@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/menu"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:theme="@style/Theme.Roomie">
+
+
+    <!-- menu in alto -->
+    <include
+        layout="@layout/top_bar"
+        android:id="@+id/top_bar"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+
+    <!-- nome impegno -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/commitmentNameContainer"
+        android:layout_width="220dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        app:cardCornerRadius="8dp"
+        app:layout_constraintTop_toBottomOf="@id/top_bar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:strokeWidth="1.5dp">
+
+
+        <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:hint="@string/commitmentName"
+        android:textSize="20sp"
+        android:gravity="center"/>
+    </com.google.android.material.card.MaterialCardView>
+
+
+    <!-- categoria impegno-->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/commitmentCategoryContainer"
+        android:layout_width="150dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="15dp"
+        app:cardCornerRadius="8dp"
+        app:layout_constraintTop_toBottomOf="@id/commitmentNameContainer"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:strokeWidth="1.5dp">
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="@string/category"
+            android:textSize="15sp"
+            android:gravity="center"/>
+
+    </com.google.android.material.card.MaterialCardView>
+
+
+    <!-- data impegno -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/commitmentDateContainer"
+        android:layout_width="120dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="15dp"
+        app:cardCornerRadius="8dp"
+        app:layout_constraintTop_toBottomOf="@id/commitmentCategoryContainer"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:strokeWidth="1.5dp">
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="@string/commitmentDate"
+            android:textSize="15sp"
+            android:gravity="center"/>
+    </com.google.android.material.card.MaterialCardView>
+
+
+    <!-- ora inizio -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/commitmentStartContainer"
+        android:layout_width="120dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="15dp"
+        app:cardCornerRadius="8dp"
+        app:layout_constraintTop_toBottomOf="@id/commitmentDateContainer"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:strokeWidth="1.5dp">
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="@string/commitmentStart"
+            android:textSize="15sp"
+            android:gravity="center"/>
+
+    </com.google.android.material.card.MaterialCardView>
+
+
+    <!-- ora fine -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/commitmentEndContainer"
+        android:layout_width="120dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="15dp"
+        app:cardCornerRadius="8dp"
+        app:layout_constraintTop_toBottomOf="@id/commitmentStartContainer"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:strokeWidth="1.5dp">
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="@string/commitmentEnd"
+            android:textSize="15sp"
+            android:gravity="center"/>
+
+    </com.google.android.material.card.MaterialCardView>
+
+
+    <!-- descrizione -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/descriptionCommitment"
+        android:layout_width="280dp"
+        android:layout_height="230dp"
+        android:layout_marginTop="15dp"
+        app:cardCornerRadius="8dp"
+        app:layout_constraintTop_toBottomOf="@id/commitmentEndContainer"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:strokeWidth="1.5dp">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="@string/commitmentDescription"
+                android:textSize="15sp"
+                android:gravity="start"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp">
+            </TextView>
+        </ScrollView>
+    </com.google.android.material.card.MaterialCardView>
+
+
+
+
+    <!-- crea impegno -->
+    <Button
+        android:layout_width="170dp"
+        android:layout_height="50dp"
+        style="@style/ButtonStyle"
+        android:text="@string/commitmentDelete"
+        android:textSize="15sp"
+        android:layout_marginTop="15dp"
+        app:layout_constraintTop_toBottomOf="@+id/descriptionCommitment"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+<!--    titoli principali schermata (es. nome gruppo in schermata gruppo)-->
+    <style name="TitleStyle" parent="TextAppearance.Material3.HeadlineMedium">
+        <item name="android:fontFamily">@font/roboto</item>
+        <item name="android:textColor">@color/onSurfaceColor</item>
+    </style>
+
+
+<!--    titoli interni di box ecc (es. data corrente)-->
+    <style name="TitleBoxStyle" parent="TextAppearance.Material3.TitleLarge">
+        <item name="android:fontFamily">@font/roboto</item>
+        <item name="android:textColor">@color/onSurfaceColor</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+
+<!--    testo principale del contenuto di box ecc-->
+    <style name="BodyStyle" parent="TextAppearance.Material3.BodyLarge">
+        <item name="android:fontFamily">@font/inter</item>
+        <item name="android:textColor">@color/onBackgroundColor</item>
+    </style>
+
+
+<!--    testo secondario o note dentro card, in generale testo "di servizio"-->
+    <style name="Body2BoxStyle" parent="TextAppearance.Material3.BodySmall">
+        <item name="android:fontFamily">@font/inter</item>
+        <item name="android:textColor">@color/onSurfaceColor</item>
+    </style>
+
+
+    <!--    testo barra sotto menu-->
+    <style name="BottomBarStyle">
+        <item name="android:fontFamily">@font/roboto</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+
+<!--    testo d'errore-->
+    <style name="errorTextAppearance" parent="TextAppearance.Material3.BodyMedium">
+        <item name="android:fontFamily">@font/inter</item>
+        <item name="android:textColor">@color/errorColor</item>
+    </style>
+
+
+<!--    testo dentro TextInputLayout ecc-->
+    <style name="hintTextAppearance" parent="TextAppearance.Material3.BodyMedium">
+        <item name="android:fontFamily">@font/inter</item>
+        <item name="android:textColor">@color/onSurfaceColor</item>
+    </style>
+
+
+    <!--    bottoni-->
+    <style name="Button" parent="@style/Widget.Material3.ExtendedFloatingActionButton.Primary">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textAppearance">@style/TitleBoxStyle</item>
+        <item name="backgroundTint">@color/primaryColor</item>
+        <item name="android:textColor">@color/onPrimaryColor</item>
+        <item name="cardElevation">10dp</item>
+    </style>
+
+
+    <!--    barre di input text-->
+    <style name="TextInputStyle" parent="Widget.Material3.TextInputLayout.OutlinedBox">
+        <item name="android:layout_width">280dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.Material3.Corner.Small</item>
+        <item name="boxBackgroundColor">@color/surfaceColor</item>
+        <item name="cardElevation">10dp</item>
+        <item name="hintTextAppearance">@style/hintTextAppearance</item>
+    </style>
+
+
+    <!--   fab per aggiunta immagine -->
+    <style name="logoImageFAB" parent="@style/Widget.Material3.FloatingActionButton.Surface">
+        <item name="android:layout_width">75dp</item>
+        <item name="android:layout_height">75dp</item>
+        <item name="fabCustomSize">75dp</item>
+        <item name="srcCompat">@drawable/add_photo</item>
+        <item name="backgroundTint">@color/surfaceColor</item>
+        <item name="maxImageSize">60dp</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+
+    <!--    barra sotto menu -->
+    <style name="bottomNavigationBar" parent="@style/Widget.Material3.BottomNavigationView">
+        <item name="backgroundTint">@color/surfaceColor</item>
+        <item name="itemIconTint">@color/tertiaryColor</item>
+        <item name="itemTextColor">@color/tertiaryColor</item>
+        <item name="labelVisibilityMode">labeled</item>
+        <item name="itemIconSize">40dp</item>
+        <item name="itemTextAppearanceActive">@style/BottomBarStyle</item>
+        <item name="itemTextAppearanceInactive">@style/BottomBarStyle</item>
+        <item name="shapeAppearance">@style/BottomNavShape</item>
+    </style>
+
+    <!--    bordi barra sotto menu -->
+    <style name="BottomNavShape" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopLeft">24dp</item>
+        <item name="cornerSizeTopRight">24dp</item>
+        <item name="cornerSizeBottomLeft">0dp</item>
+        <item name="cornerSizeBottomRight">0dp</item>
+    </style>
+
+    <!--    stile card -->
+    <style name="ElevatedCard" parent="@style/Widget.Material3.CardView.Elevated">
+        <item name="cardElevation">10dp</item>
+    </style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- nome e icona utente-->
+    <style name="UserIconStyle">
+        <item name="android:layout_width">45dp</item>
+        <item name="android:layout_height">45dp</item>
+        <item name="android:padding">2dp</item>
+        <item name="android:background">@drawable/circle_background</item>
+        <item name="android:scaleType">centerCrop</item>
+        <item name="tint">@null</item>
+    </style>
+
+
+    <style name="UserTextStyle">
+        <item name="android:textSize">20sp</item>
+        <item name="android:fontFamily">@font/inter</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:color">@color/onSurfaceColor</item>
+    </style>
+
+
+
+    <style name="ArrowBack">
+        <item name="android:src">@drawable/arrow_back</item>
+        <item name="backgroundTint">@android:color/transparent</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_marginStart">10dp</item>
+    </style>
+
+</resources>

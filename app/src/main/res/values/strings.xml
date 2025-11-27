@@ -1,0 +1,46 @@
+<resources>
+    <string name="app_name">Roomie</string>
+    <string name="Login">Accedi</string>
+    <string name="Register_underlined">Non hai un account? <u>Registrati</u></string>
+    <string name="UserName">Nome Utente</string>
+    <string name="Password">Password</string>
+    <string name="Email">Email</string>
+    <string name="CreateAccount">Crea Account</string>
+    <string name="GoogleAccess">Accedi con Google</string>
+    <string name="profilePicture">Foto profilo utente</string>
+    <string name="groupPicture">Foto profilo gruppo</string>
+    <string name="arrowBack">Freccia indietro</string>
+    <string name="userData">Dati utente</string>
+    <string name="my_groups">I miei gruppi</string>
+    <string name="activityMemory">Registro attività</string>
+    <string name="navigationDrawer">Menu gruppi</string>
+    <string name="category">Categoria</string>
+    <string name="group">Gruppo</string>
+    <string name="board">Bacheca</string>
+    <string name="purchase">Spesa</string>
+    <string name="summary">Rapporto</string>
+    <string name="newGroup">Crea nuovo gruppo</string>
+    <string name="seeRequests">Visualizza richieste</string>
+    <string name="groupName">Nome gruppo</string>
+    <string name="createGroup">Crea gruppo</string>
+    <string name="searchGroup">Ricerca gruppo</string>
+    <string name="newPurchase">Nuova spesa</string>
+    <string name="categories">Elenco categorie</string>
+    <string name="newCategory">Nuova categoria</string>
+    <string name="createCategory">Crea categoria</string>
+    <string name="selectCategory">Seleziona categoria</string>
+    <string name="disconnect">Disconnetti</string>
+    <string name="commitmentName">Nome impegno</string>
+    <string name="commitmentDate">Data</string>
+    <string name="commitmentStart">Ora inizio</string>
+    <string name="commitmentEnd">Ora fine</string>
+    <string name="commitmentDescription">Descrizione impegno</string>
+    <string name="commitmentCreate">Crea impegno</string>
+    <string name="commitmentDelete">Elimina impegno</string>
+    <string name="insertEmail">Inserisci email</string>
+    <string name="sendRequest">Invia richiesta</string>
+    <string name="newPassword">Inserisci la tua email, ti invieremo una email per resettarla</string>
+    <string name="forgotPassword_underlined"><u>Password dimenticata?</u></string>
+    <string name="sendEmail">Invia email</string>
+
+</resources>

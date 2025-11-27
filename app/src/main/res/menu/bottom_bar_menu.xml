@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/group"
+        android:icon="@drawable/group"
+        android:title="@string/group"/>
+
+    <item
+        android:id="@+id/board"
+        android:icon="@drawable/text_wall"
+        android:title="@string/board"/>
+
+    <item
+        android:id="@+id/purchase"
+        android:icon="@drawable/purchase"
+        android:title="@string/purchase"/>
+
+    <item
+        android:id="@+id/graph"
+        android:icon="@drawable/graph"
+        android:title="@string/summary"/>
+</menu>

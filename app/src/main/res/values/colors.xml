@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="backgroundColor">#8CC1D5</color>
+    <color name="onBackgroundColor">#0E1A20</color>
+    <color name="primaryColor">#474B9E</color>
+    <color name="onPrimaryColor">#FFFFFF</color>
+    <color name="primaryContainerColor">#747AF2</color>
+    <color name="onPrimaryContainerColor">#1A1C41</color>
+    <color name="secondaryColor">#B5FFEA</color>
+    <color name="onSecondaryColor">#00382B</color>
+    <color name="secondaryContainerColor">#E5FFF6</color>
+    <color name="onSecondaryContainerColor">#00382B</color>
+    <color name="tertiaryColor">#FF8D28</color>
+    <color name="onTertiaryColor">#FFFFFF</color>
+    <color name="tertiaryContainerColor">#FFBE87</color>
+    <color name="onTertiaryContainerColor">#1A1C41</color>
+    <color name="surfaceColor">#FFFFFF</color>
+    <color name="onSurfaceColor">#1A1A1A</color>
+    <color name="surfaceContainerColor">#D3E5ED</color>
+    <color name="surfaceVariantColor">#EBEFFF</color>
+    <color name="errorColor">#BA1A1A</color>
+    <color name="onErrorColor">#FFFFFF</color>
+    <color name="errorContainerColor">#FFDAD6</color>
+    <color name="onErrorContainerColor">#410002</color>
+    <color name="outlineColor">#D9EEF5</color>
+    <color name="outlineVariantColor">#4A6B9A</color>
+    <color name="surfaceInverseColor">#1B3442</color>
+    <color name="onSurfaceInverseColor">#E7F4FA</color>
+    <color name="primaryInverseColor">#C1C4FF</color>
+</resources>
