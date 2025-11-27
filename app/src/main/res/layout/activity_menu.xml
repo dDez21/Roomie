@@ -7,8 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:theme="@style/Theme.Roomie">
-
-
+    
 
 
     <com.google.android.material.card.MaterialCardView
@@ -23,9 +22,15 @@
 
         <CalendarView
             android:id="@+id/calendarView"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:firstDayOfWeek="2"/>
+            android:firstDayOfWeek="2"
+            android:theme="@style/ThemeOverlay.Roomie.Calendar"
+            android:showWeekNumber="false"
+            android:focusedMonthDateColor="@color/daysColor"
+            android:unfocusedMonthDateColor="@color/outsideMonthDaysColor"
+            android:weekDayTextAppearance="@style/CalendarWeekDayText"
+            android:dateTextAppearance="@style/CalendarDateText"/>
     </com.google.android.material.card.MaterialCardView>
 
 

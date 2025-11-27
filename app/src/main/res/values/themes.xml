@@ -14,6 +14,7 @@
         <item name="colorOnTertiaryContainer">@color/onTertiaryContainerColor</item>
         <item name="colorSurface">@color/surfaceColor</item>
         <item name="colorOnSurface">@color/onSurfaceColor</item>
+        <item name="colorOnSurfaceVariant">@color/onSurfaceVariantColor</item>
         <item name="colorSurfaceContainer">@color/surfaceContainerColor</item>
         <item name="colorSurfaceVariant">@color/surfaceVariantColor</item>
         <item name="colorError">@color/errorColor</item>

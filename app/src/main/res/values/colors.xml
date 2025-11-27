@@ -16,6 +16,7 @@
     <color name="onTertiaryContainerColor">#1A1C41</color>
     <color name="surfaceColor">#FFFFFF</color>
     <color name="onSurfaceColor">#1A1A1A</color>
+    <color name="onSurfaceVariantColor">#595959</color>
     <color name="surfaceContainerColor">#D3E5ED</color>
     <color name="surfaceVariantColor">#EBEFFF</color>
     <color name="errorColor">#BA1A1A</color>
@@ -27,4 +28,9 @@
     <color name="surfaceInverseColor">#1B3442</color>
     <color name="onSurfaceInverseColor">#E7F4FA</color>
     <color name="primaryInverseColor">#C1C4FF</color>
+
+    <color name="daysColor">#1C1C1E</color>
+    <color name="outsideMonthDaysColor">#D1D1D6</color>
+    <color name="weekdayColor">#8E8E93</color>
+    <color name="daySelectedColor">#FFFFFF</color>
 </resources>
