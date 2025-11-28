@@ -17,27 +17,24 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
-        <com.google.android.material.card.MaterialCardView
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="320dp"
+        android:layout_height="540dp"
+        android:id="@+id/actionRegister"
+        android:layout_marginTop="20dp"
+        style="@style/ElevatedCard"
+        app:layout_constraintTop_toBottomOf="@id/top_bar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <!-- elementi in single_action -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/commitmentsContainer"
             android:layout_width="match_parent"
-            android:layout_height="540dp"
-            android:id="@+id/actionRegister"
-            android:layout_marginStart="40dp"
-            android:layout_marginEnd="40dp"
-            android:layout_marginTop="15dp"
-            app:cardCornerRadius="25dp"
-            app:layout_constraintTop_toBottomOf="@id/top_bar"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
-
-            <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-
-            </ScrollView>
-
-
-        </com.google.android.material.card.MaterialCardView>
-
-
+            android:layout_height="match_parent"
+            android:layout_margin="15dp"
+            android:nestedScrollingEnabled="false"
+            android:scrollbars="none"
+            android:overScrollMode="never"/>
+    </com.google.android.material.card.MaterialCardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

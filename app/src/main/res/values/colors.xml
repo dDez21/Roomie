@@ -28,7 +28,8 @@
     <color name="surfaceInverseColor">#1B3442</color>
     <color name="onSurfaceInverseColor">#E7F4FA</color>
     <color name="primaryInverseColor">#C1C4FF</color>
-
+    <color name="navDrawerBackground">#59B7E6</color>
+    <color name="toggleButton">#126E82</color>
     <color name="daysColor">#1C1C1E</color>
     <color name="outsideMonthDaysColor">#D1D1D6</color>
     <color name="weekdayColor">#8E8E93</color>

@@ -18,36 +18,128 @@
         app:layout_constraintEnd_toEndOf="parent"
         />
 
+    <!-- bottoni con opzioni -->
+    <com.google.android.material.button.MaterialButtonToggleGroup
+        android:id="@+id/toggleButton"
+        android:layout_width="370dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/top_bar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="20dp"
+        app:checkedButton="@+id/newGroup"
+        app:singleSelection="true"
+        app:selectionRequired="true">
 
-    <!-- selezione opzione gruppi -->
+        <Button
+            style="@style/toggleButton"
+            android:id="@+id/newGroup"
+            android:layout_width="185dp"
+            android:layout_height="wrap_content"
+            android:text="@string/newGroup"
+            />
+
+        <Button
+            style="@style/toggleButton"
+            android:id="@+id/seeRequests"
+            android:layout_width="185dp"
+            android:layout_height="wrap_content"
+            android:text="@string/seeRequests"
+            />
+    </com.google.android.material.button.MaterialButtonToggleGroup>
+
+
+    <!-- crea nuovo gruppo -->
     <LinearLayout
-        android:id="@+id/buttonContainer"
+        android:id="@+id/newGroupSelection"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:gravity="center"
-        app:layout_constraintTop_toBottomOf="@+id/top_bar"
-        android:layout_marginTop="20dp">
+        app:layout_constraintTop_toBottomOf="@+id/toggleButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="40dp">
 
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/groupName"
+            style="@style/TextInputStyle"
+            android:hint="@string/groupName">
 
-        <!-- crea gruppo -->
-        <Button
-            android:id="@+id/newGroup"
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints="username"
+                android:imeOptions="actionNext"
+                android:inputType="text"
+                android:drawableStart="@drawable/group"
+                android:drawableTint="@color/onSurfaceColor"
+                android:drawablePadding="5dp"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/addIcon"
+            style="@style/logoImageFAB"
+            app:backgroundTint="@color/surfaceColor"
+            app:tint="@null"
+            android:layout_marginTop="15dp"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/CreateAccount"
             style="@style/Button"
-            android:text="@string/newGroup"/>
-
-
-        <!-- vedi richieste gruppi -->
-        <Button
-            android:id="@+id/seeRequests"
-            style="@style/Button"
-            android:text="@string/seeRequests"
-            android:layout_marginTop="5dp"/>
+            android:text="@string/CreateAccount"
+            android:layout_marginTop="20dp"/>
     </LinearLayout>
 
 
-    <!-- aggiungi elementi -->
 
 
+    <!-- visualizza richieste -->
+    <LinearLayout
+        android:id="@+id/seeRequestList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@+id/toggleButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="40dp">
 
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/groupSearch"
+            style="@style/searchBar"
+            android:hint="@string/searchGroup">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints="username"
+                android:imeOptions="actionSearch"
+                android:inputType="text"
+                android:drawableStart="@drawable/search"
+                android:drawableTint="@color/onSurfaceColor"
+                android:drawablePadding="5dp"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/groupListCard"
+            android:layout_width="280dp"
+            android:layout_height="300dp"
+            style="@style/ElevatedCard"
+            android:layout_marginTop="24dp"
+            app:cardElevation="8dp">
+
+
+            <!-- modello tipo elemento in single_group_request -->
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/groupsRecyclerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="15dp"
+                        android:nestedScrollingEnabled="false"
+                        android:scrollbars="none"
+                        android:overScrollMode="never"/>
+        </com.google.android.material.card.MaterialCardView>
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -8,6 +8,13 @@
         <item name="android:textColor">@color/onSurfaceColor</item>
     </style>
 
+    <!-- stile bottoni -->
+    <style name="buttonStyle" parent="TextAppearance.Material3.TitleMedium">
+        <item name="android:fontFamily">@font/roboto</item>
+        <item name="android:textColor">@color/onSurfaceColor</item>
+
+    </style>
+
 
 <!--    titoli interni di box ecc (es. data corrente)-->
     <style name="TitleBoxStyle" parent="TextAppearance.Material3.TitleLarge">
@@ -22,6 +29,17 @@
         <item name="android:textColor">@color/onBackgroundColor</item>
     </style>
 
+
+    <style name="ActionStyle" parent="TextAppearance.Material3.BodyLarge">
+        <item name="android:fontFamily">@font/inter</item>
+        <item name="android:textColor">@color/onSurfaceColor</item>
+    </style>
+
+
+    <style name="SmallStyle" parent="TextAppearance.Material3.BodySmall">
+        <item name="android:fontFamily">@font/inter</item>
+        <item name="android:textColor">@color/onSurfaceVariantColor</item>
+    </style>
 
 <!--    stile dati in alto -->
     <style name="userStyle" parent="TextAppearance.Material3.BodyLarge">
@@ -57,7 +75,7 @@
     <style name="Button" parent="@style/Widget.Material3.ExtendedFloatingActionButton.Primary">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textAppearance">@style/TitleBoxStyle</item>
+        <item name="android:textAppearance">@style/buttonStyle</item>
         <item name="backgroundTint">@color/primaryColor</item>
         <item name="android:textColor">@color/onPrimaryColor</item>
         <item name="cardElevation">10dp</item>
@@ -108,9 +126,11 @@
         <item name="cornerSizeBottomRight">0dp</item>
     </style>
 
+
     <!--    stile card -->
     <style name="ElevatedCard" parent="@style/Widget.Material3.CardView.Elevated">
         <item name="cardElevation">10dp</item>
+        <item name="backgroundTint">@color/surfaceColor</item>
     </style>
 
 
@@ -130,7 +150,34 @@
     </style>
 
 
+    <style name="navViewBorders">
+        <item name="cornerSizeTopRight">16dp</item>
+        <item name="cornerSizeBottomRight">16dp</item>
+    </style>
 
+
+    <style name="toggleButton" parent="Widget.Material3.Button.TonalButton">
+        <item name="android:textAppearance">@style/BottomBarStyle</item>
+        <item name="backgroundTint">@color/background_tb_color</item>
+        <item name="android:textColor">@color/text_tb_color</item>
+        <item name="elevation">8dp</item>
+        <item name="strokeWidth">2dp</item>
+        <item name="strokeColor">@color/toggleButton</item>
+    </style>
+
+
+    <style name="searchBar" parent="Widget.Material3.TextInputLayout.OutlinedBox">
+        <item name="android:layout_width">280dp</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="shapeAppearance">@style/SearchBarShape</item>
+        <item name="shapeAppearanceOverlay">@style/SearchBarShape</item>
+        <item name="elevation">8dp</item>
+        <item name="boxBackgroundColor">@color/surfaceColor</item>
+    </style>
+
+    <style name="SearchBarShape" parent="">
+        <item name="cornerSize">24dp</item>
+    </style>
 
 
 

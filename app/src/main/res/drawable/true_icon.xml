@@ -1,0 +1,38 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+
+    <!-- Cerchio esterno + interno (riempito, come nella tua SVG) -->
+    <path
+        android:fillColor="@color/onSurfaceColor"
+        android:pathData="
+            M12,22.75
+            C6.07,22.75 1.25,17.93 1.25,12
+            C1.25,6.07 6.07,1.25 12,1.25
+            C17.93,1.25 22.75,6.07 22.75,12
+            C22.75,17.93 17.93,22.75 12,22.75z
+            M12,2.75
+            C6.9,2.75 2.75,6.9 2.75,12
+            C2.75,17.1 6.9,21.25 12,21.25
+            C17.1,21.25 21.25,17.1 21.25,12
+            C21.25,6.9 17.1,2.75 12,2.75z" />
+
+
+    <!-- Check mark -->
+    <path
+        android:fillColor="@color/onSurfaceColor"
+        android:pathData="
+            M10.5799,15.58
+            C10.3799,15.58 10.1899,15.5 10.0499,15.36
+            L7.21994,12.53
+            C6.92994,12.24 6.92994,11.76 7.21994,11.47
+            C7.50994,11.18 7.98994,11.18 8.27994,11.47
+            L10.5799,13.77
+            L15.7199,8.62998
+            C16.0099,8.33998 16.4899,8.33998 16.7799,8.62998
+            C17.0699,8.91998 17.0699,9.39998 16.7799,9.68998
+            L11.1099,15.36
+            C10.9699,15.5 10.7799,15.58 10.5799,15.58z" />
+</vector>

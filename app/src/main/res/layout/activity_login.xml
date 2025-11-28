@@ -97,10 +97,10 @@
     <!-- bottone registrati -->
     <TextView
         android:id="@+id/Registrati"
-        style="@style/TitleBoxStyle"
+        style="@style/BodyStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="8dp"
         android:clickable="true"
         android:focusable="true"
         android:text="@string/Register_underlined"
