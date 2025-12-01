@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/newCategory"
+    android:layout_width="270dp"
+    android:layout_height="wrap_content"
+    android:backgroundTint="@color/surfaceContainerColor">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp">
+
+
+            <!-- nome categoria -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/categoryName"
+                style="@style/TextInputStyle"
+                android:hint="@string/newCategory"
+                android:layout_width="200dp"
+                android:layout_height="48dp"
+                android:elevation="6dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <!-- testo dentro email -->
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/textCategoryName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:imeOptions="actionDone"
+                    android:inputType="textCapWords"
+                    android:maxLines="1"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+
+        <FrameLayout
+            android:id="@+id/colorPickerViewFrame"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/categoryName">
+
+            <com.skydoves.colorpickerview.ColorPickerView
+                android:id="@+id/colorPickerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:selector="@drawable/circle_background"
+                app:selector_size="10dp"
+                app:alpha_selector="1.0"/>
+        </FrameLayout>
+
+
+        <View
+            android:id="@+id/colorPreview"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/color_picker"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/colorPickerViewFrame"/>
+
+
+        <!-- per modifica categoria cambio testo dentro il bottone -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/createCategory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/createCategory"
+            android:layout_marginTop="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/colorPreview"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>

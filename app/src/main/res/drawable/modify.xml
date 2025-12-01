@@ -1,0 +1,32 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+
+    <!-- Linea alla base -->
+    <path
+        android:fillColor="@color/onSurfaceColor"
+        android:strokeColor="#1B1B1B"
+        android:strokeWidth="2"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:pathData="M12,20 H21" />
+
+    <!-- Matita -->
+    <path
+        android:fillColor="@android:color/transparent"
+        android:strokeColor="@color/onSurfaceColor"
+        android:strokeWidth="2"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:pathData="M16.5,3.49998
+                          C16.8978,3.10216 17.4374,2.87866 18,2.87866
+                          C18.2786,2.87866 18.5544,2.93353 18.8118,3.04014
+                          C19.0692,3.14674 19.303,3.303 19.5,3.49998
+                          C19.697,3.69697 19.8532,3.93082 19.9598,4.18819
+                          C20.0665,4.44556 20.1213,4.72141 20.1213,4.99998
+                          C20.1213,5.27856 20.0665,5.55441 19.9598,5.81178
+                          C19.8532,6.06915 19.697,6.303 19.5,6.49998
+                          L7,19 L3,20 L4,16 L16.5,3.49998z" />
+</vector>

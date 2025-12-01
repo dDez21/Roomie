@@ -90,6 +90,18 @@
                 android:layout_height="match_parent">
 
 
+                <ImageButton
+                    android:id="@+id/newCommitment"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/new_category"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:paddingStart="10dp"
+                    app:tint="@color/onSurfaceColor"/>
+
+
                 <!-- data corrente -->
                 <TextView
                     android:id="@+id/currentDate"
