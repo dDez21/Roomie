@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/group_section"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:theme="@style/Theme.Roomie">
+
+
+    <!-- menu in alto -->
+    <include
+        layout="@layout/top_bar"
+        android:id="@+id/top_bar"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+
+    <!-- nome spesa -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/purchaseName"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/purchaseName"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@id/top_bar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textPurchaseName"
+            android:imeOptions="actionDone"
+            android:inputType="textCapWords"
+            android:maxLines="1"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <!-- ammontare spesa -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/purchaseCost"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/purchaseCost"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@id/purchaseName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:endIconMode="custom"
+        app:endIconDrawable="@drawable/euro">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textPurchaseCost"
+            android:imeOptions="actionDone"
+            android:inputType="textCapWords"
+            android:maxLines="1"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <!-- Pulsante pagato da -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/paidByButton"
+        style="@style/TextInputStyle"
+        android:layout_width="220dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        android:backgroundTint="@color/surfaceColor"
+        android:gravity="start|center"
+        android:text="@string/purchasedFrom"
+        android:textColor="@color/onSurfaceColor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/purchaseCost"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"/>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/paidByDropdownCard"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        style="@style/ElevatedCard"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/paidByButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp">
+
+            <TextView
+                android:id="@+id/paidByTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/UserName"
+                style="@style/hintTextAppearance"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/paidByRecycler"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:overScrollMode="never"
+                android:nestedScrollingEnabled="false"
+                android:scrollbars="none"
+                app:layout_constraintTop_toBottomOf="@id/paidByTitle"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+
+
+    <!-- Pulsante diviso tra -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/dividedByButton"
+        style="@style/TextInputStyle"
+        android:layout_width="220dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="15dp"
+        android:backgroundTint="@color/surfaceColor"
+        android:gravity="start|center"
+        android:text="@string/dividedFrom"
+        android:textColor="@color/onSurfaceColor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/paidByButton"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"/>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/dividedByDropdownCard"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        style="@style/ElevatedCard"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/dividedByButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp">
+
+            <TextView
+                android:id="@+id/dividedByTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/UserName"
+                style="@style/hintTextAppearance"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/dividedByRecycler"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:overScrollMode="never"
+                android:nestedScrollingEnabled="false"
+                android:scrollbars="none"
+                app:layout_constraintTop_toBottomOf="@id/dividedByTitle"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+
+    <!-- data spesaa + crea dialog-->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/startDateLayout"
+        android:layout_width="170dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/purchaseDate"
+        app:endIconMode="custom"
+        app:endIconDrawable="@drawable/calendar"
+        app:layout_constraintTop_toBottomOf="@id/dividedByButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="10dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/startDateEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="none"
+            android:focusable="false"
+            android:clickable="true"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <!-- tipo divisione -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/splitTypeLayout"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/purchaseSplit"
+        app:layout_constraintTop_toBottomOf="@id/startDateLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="10dp">
+
+
+        <AutoCompleteTextView
+            android:id="@+id/splitTypeDropdown"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="none"
+            android:focusable="false"
+            android:clickable="true"
+            android:textSize="16dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <!-- caso sfalzato -->
+    <com.google.android.material.card.MaterialCardView
+    android:id="@+id/skewedSplitCard"
+    android:layout_width="220dp"
+    android:layout_height="wrap_content"
+    style="@style/ElevatedCard"
+    android:visibility="gone"
+    app:layout_constraintTop_toBottomOf="@id/splitTypeLayout"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp">
+
+        <TextView
+            android:id="@+id/skewedTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/customSplit"
+            style="@style/hintTextAppearance"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/skewedSplitRecycler"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:overScrollMode="never"
+            android:nestedScrollingEnabled="false"
+            android:scrollbars="none"
+            app:layout_constraintTop_toBottomOf="@id/skewedTitle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+
+    <!-- descrizione -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/commitmentDescriptionCard"
+        android:layout_width="280dp"
+        android:layout_height="220dp"
+        android:layout_marginTop="10dp"
+        style="@style/ElevatedCard"
+        app:layout_constraintTop_toBottomOf="@id/splitTypeLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <!-- Campo descrizione con hint che sparisce quando scrivi -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/descriptionLayout"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:hint="@string/commitmentDescription"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/actionsRow"
+                android:background="@android:color/transparent"
+                app:boxBackgroundMode="none"
+                android:layout_marginEnd="4dp">
+
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/commitmentDescriptionEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="start|top"
+                    android:inputType="textMultiLine"
+                    android:scrollbars="vertical"
+                    android:overScrollMode="always"
+                    android:scrollHorizontally="false"
+                    android:paddingTop="4dp"
+                    android:paddingBottom="4dp"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Riga icone in basso a destra -->
+            <LinearLayout
+                android:id="@+id/actionsRow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="end|center_vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="5dp">
+
+                <ImageButton
+                    android:id="@+id/actionEdit"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/modify"
+                    app:tint="@color/onSurfaceColor"/>
+
+                <ImageButton
+                    android:id="@+id/actionEmoji"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/add_photo"
+                    app:tint="@color/onSurfaceColor"
+                    android:layout_marginStart="10dp"/>
+
+                <ImageButton
+                    android:id="@+id/actionCamera"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/photo"
+                    app:tint="@color/onSurfaceColor"
+                    android:layout_marginStart="10dp"/>
+
+                <ImageButton
+                    android:id="@+id/actionMic"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/microphone"
+                    app:tint="@color/onSurfaceColor"
+                    android:layout_marginStart="10dp"/>
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+
+    <!-- crea impegno -->
+    <Button
+        android:layout_width="160dp"
+        android:layout_height="45dp"
+        style="@style/Button"
+        android:text="@string/purchaseConfirm"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@id/commitmentDescriptionCard"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

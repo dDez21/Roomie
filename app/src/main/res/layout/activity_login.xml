@@ -41,7 +41,11 @@
             android:drawablePadding="5dp"
             android:imeOptions="actionNext"
             android:inputType="textEmailAddress"
-            android:nextFocusDown="@id/Password" />
+            android:nextFocusDown="@id/Password"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"/>
     </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -65,7 +69,11 @@
             android:drawablePadding="5dp"
             android:imeOptions="actionDone"
             android:inputType="textPassword"
-            android:nextFocusDown="@id/LoginButton" />
+            android:nextFocusDown="@id/LoginButton"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"/>
     </com.google.android.material.textfield.TextInputLayout>
 
 
