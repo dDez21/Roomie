@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/menu"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:theme="@style/Theme.Roomie">
+
+    <include
+        android:id="@+id/top_bar"
+        layout="@layout/top_bar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/commitmentsDailyContainer"
+        android:layout_width="350dp"
+        android:layout_height="380dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/top_bar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="15dp"
+            android:orientation="vertical">
+
+            <!-- grafico -->
+            <com.github.mikephil.charting.charts.PieChart
+                android:id="@+id/graph"
+                android:layout_width="220dp"
+                android:layout_height="220dp"
+                android:layout_gravity="center"/>
+
+            <!-- separatore -->
+            <View
+                android:id="@+id/divider"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/onSurfaceColor"
+                android:layout_marginTop="5dp"/>
+
+            <!-- layout sta in single_user_report -->
+            <!-- elenco membri-->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/commitmentsContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/divider"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="5dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:nestedScrollingEnabled="false"
+                android:scrollbars="none"
+                android:overScrollMode="never"/>
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/singleReport"
+        android:layout_width="350dp"
+        android:layout_height="210dp"
+        android:layout_marginTop="25dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/commitmentsDailyContainer">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_margin="10dp">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <!-- totale singolo utente -->
+                <TextView
+                    android:id="@+id/totalUser"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/total"
+                    style="@style/TitleBoxStyle"
+                    android:maxLines="1"
+                    android:ellipsize="end"/>
+
+
+                <!-- ammontare totale singolo utente -->
+                <TextView
+                    android:id="@+id/detailAmount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0,00 €"
+                    style="@style/TitleBoxStyle"/>
+            </LinearLayout>
+
+
+            <!-- debiti e crediti -->
+            <com.google.android.material.button.MaterialButtonToggleGroup
+                android:id="@+id/toggleButton"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="5dp"
+                app:checkedButton="@+id/toReceive"
+                app:singleSelection="true"
+                app:selectionRequired="true"
+                android:elevation="10dp">
+
+
+                <com.google.android.material.button.MaterialButton
+                    style="@style/toggleButton"
+                    android:id="@+id/toReceive"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="@string/toReceive"/>
+
+                <com.google.android.material.button.MaterialButton
+                    style="@style/toggleButton"
+                    android:id="@+id/toGive"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="@string/toGive"/>
+            </com.google.android.material.button.MaterialButtonToggleGroup>
+
+            <!-- layout singolo elemento sta dentro single_user_debt -->
+            <!-- elenco debiti e crediti-->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/debtContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:nestedScrollingEnabled="false"
+                android:scrollbars="none"
+                android:overScrollMode="never"/>
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+</androidx.constraintlayout.widget.ConstraintLayout>

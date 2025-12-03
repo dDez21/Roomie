@@ -31,21 +31,23 @@
         app:singleSelection="true"
         app:selectionRequired="true">
 
-        <Button
+
+        <com.google.android.material.button.MaterialButton
             style="@style/toggleButton"
             android:id="@+id/newGroup"
-            android:layout_width="185dp"
-            android:layout_height="wrap_content"
             android:text="@string/newGroup"
-            />
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
 
-        <Button
+
+        <com.google.android.material.button.MaterialButton
             style="@style/toggleButton"
             android:id="@+id/seeRequests"
-            android:layout_width="185dp"
-            android:layout_height="wrap_content"
             android:text="@string/seeRequests"
-            />
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
     </com.google.android.material.button.MaterialButtonToggleGroup>
 
 

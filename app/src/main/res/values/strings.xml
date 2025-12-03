@@ -54,5 +54,8 @@
     <string name="purchaseConfirm">Inserisci spesa</string>
     <string name="inviteMember">Invita un nuovo membro</string>
     <string name="inviteMemberDescription">Inserisci l\'indirizzo email della persona da invitare</string>
+    <string name="total">Totale</string>
+    <string name="toGive">Da dare</string>
+    <string name="toReceive">Da ricevere</string>
 
 </resources>
