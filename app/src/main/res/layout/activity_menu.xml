@@ -6,7 +6,7 @@
     android:id="@+id/drawerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:drawerElevation="6dp">
+    android:elevation="6dp">
 
 
 <!--    devo mettere visibility:gone per la freccia indietro-->

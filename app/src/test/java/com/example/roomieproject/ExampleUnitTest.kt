@@ -1,4 +1,4 @@
-package com.example.roomie
+package com.example.roomieproject
 
 import org.junit.Test
 

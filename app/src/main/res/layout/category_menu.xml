@@ -57,8 +57,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:selector="@drawable/circle_background"
-                app:selector_size="10dp"
-                app:alpha_selector="1.0"/>
+                app:selector_size="10dp"/>
         </FrameLayout>
 
 
