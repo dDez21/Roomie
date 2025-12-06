@@ -123,7 +123,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="@string/toReceive"/>
+                    android:text="@string/entrances"/>
 
                 <com.google.android.material.button.MaterialButton
                     style="@style/toggleButton"
@@ -131,7 +131,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="@string/toGive"/>
+                    android:text="@string/exits"/>
             </com.google.android.material.button.MaterialButtonToggleGroup>
 
             <!-- layout singolo elemento sta dentro single_user_debt -->

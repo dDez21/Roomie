@@ -90,9 +90,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Password"/>
 
-
     <!-- bottone invio -->
-    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/LoginButton"
         style="@style/Button"
         android:layout_marginTop="15dp"
@@ -104,7 +103,7 @@
 
     <!-- bottone registrati -->
     <TextView
-        android:id="@+id/Registrati"
+        android:id="@+id/Register"
         style="@style/BodyStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -127,5 +126,5 @@
         app:iconTint="@null"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Registrati" />
+        app:layout_constraintTop_toBottomOf="@+id/Register" />
 </androidx.constraintlayout.widget.ConstraintLayout>

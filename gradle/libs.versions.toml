@@ -24,7 +24,6 @@ androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecyc
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 colorpickerview = { group = "com.github.skydoves", name = "colorpickerview", version.ref = "colorpickerview" }
 amazon-ion-java = { group = "com.amazon.ion", name = "ion-java", version.ref = "amazonIonJava" }
-materialCalendarview = { group = "com.prolificinteractive", name = "material-calendarview", version = "1.4.3" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
