@@ -96,7 +96,7 @@ class LoginActivity : AppCompatActivity() {
 
 
         forgotPpw.setOnClickListener {
-            startActivity(Intent(this, ForgotPasswordActivity::class.java))
+            //startActivity(Intent(this, ForgotPasswordActivity::class.java))
         }
 
         // login email/password
