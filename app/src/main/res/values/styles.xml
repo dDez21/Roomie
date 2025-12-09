@@ -183,10 +183,6 @@
 
 
 
-
-
-
-
 <!-- nome e icona utente-->
     <style name="UserIconStyle">
         <item name="android:layout_width">45dp</item>
@@ -212,8 +208,8 @@
         <item name="backgroundTint">@android:color/transparent</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginTop">10dp</item>
-        <item name="android:layout_marginStart">10dp</item>
+        <item name="android:layout_marginTop">20dp</item>
+        <item name="android:layout_marginStart">20dp</item>
     </style>
 
 </resources>

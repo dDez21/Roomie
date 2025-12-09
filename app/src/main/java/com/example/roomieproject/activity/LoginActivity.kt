@@ -26,6 +26,7 @@ import androidx.lifecycle.lifecycleScope
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential.Companion.TYPE_GOOGLE_ID_TOKEN_CREDENTIAL
+import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.coroutines.TimeoutCancellationException
@@ -37,6 +38,15 @@ import kotlinx.coroutines.withTimeout
 class LoginActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth //per autenticazione normale e google
     private lateinit var credentialManager: CredentialManager // API autenticazione google
+    private lateinit var Email: TextInputLayout
+    private lateinit var txtEmail: TextInputEditText
+    private lateinit var Password: TextInputLayout
+    private lateinit var txtPassword: TextInputEditText
+    private lateinit var forgotPpw: TextView
+    private lateinit var loginButton: MaterialButton
+    private lateinit var register: TextView
+    private lateinit var googleLoginButton: MaterialButton
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,40 +66,56 @@ class LoginActivity : AppCompatActivity() {
         }
 
 
-        // collego gli input esterni
-        val txtEmail = findViewById<TextInputEditText>(R.id.textEmail)
-        val txtPassword = findViewById<TextInputEditText>(R.id.textPassword)
-        val btnPpwDim = findViewById<TextView>(R.id.forgotPassword)
-        val login = findViewById<MaterialButton>(R.id.LoginButton)
-        val register = findViewById<TextView>(R.id.Register)
-        val googleLogin = findViewById<MaterialButton>(R.id.Google)
+        Email = requireNotNull(findViewById(R.id.Email)) {
+            "Contenitore email (TextInputLayout) non trovato nel layout"
+        }
+        txtEmail = requireNotNull(findViewById(R.id.textEmail)) {
+            "EditText email non trovato nel layout"
+        }
 
-        requireNotNull(txtEmail){"Email non trovata nel layout"}
-        requireNotNull(txtPassword){"Password non trovata nel layout"}
-        requireNotNull(btnPpwDim){"Bottone PpwDim non trovato nel layout"}
-        requireNotNull(login){"Bottone Login non trovato nel layout"}
-        requireNotNull(register){"Bottone Registrati non trovato nel layout"}
-        requireNotNull(googleLogin){"Bottone Login Google non trovato nel layout"}
+        Password = requireNotNull(findViewById(R.id.Password)) {
+            "Contenitore password (TextInputLayout) non trovato nel layout"
+        }
+        txtPassword = requireNotNull(findViewById(R.id.textPassword)) {
+            "EditText password non trovato nel layout"
+        }
 
-        //azione password dimenticata
-        btnPpwDim.setOnClickListener {
+        forgotPpw = requireNotNull(findViewById(R.id.forgotPassword)) {
+            "forgotPassword non trovato nel layout"
+        }
+        loginButton = requireNotNull(findViewById(R.id.LoginButton)) {
+            "LoginButton non trovato nel layout"
+        }
+        register = requireNotNull(findViewById(R.id.Register)) {
+            "Register TextView non trovato nel layout"
+        }
+        googleLoginButton = requireNotNull(findViewById(R.id.Google)) {
+            "Google login button non trovato nel layout"
+        }
+
+
+
+        forgotPpw.setOnClickListener {
             startActivity(Intent(this, ForgotPasswordActivity::class.java))
         }
 
-        //azione login
-        login.setOnClickListener {
+        // login email/password
+        loginButton.setOnClickListener {
             val email = txtEmail.text?.toString()?.trim().orEmpty()
-            val ppw  = txtPassword.text?.toString()?.trim().orEmpty()
-            signIn(email, ppw)
+            val password = txtPassword.text?.toString()?.trim().orEmpty()
+            signIn(email, password)
         }
 
-        //azione registrati
+        // vai alla schermata di registrazione
         register.setOnClickListener {
             startActivity(Intent(this, RegisterActivity::class.java))
         }
 
-        //azione login Google
-        googleLogin.setOnClickListener { launchGoogle() }
+        // login con Google
+        googleLoginButton.setOnClickListener {
+            launchGoogle()
+        }
+
     }
 
     //verifico se utente già loggato per saltare login
@@ -107,7 +133,12 @@ class LoginActivity : AppCompatActivity() {
     }
 
 
+    //login classico con email e ppw
     private fun signIn(email: String, password: String) {
+
+        Email.error = null
+        Password.error = null
+
         //verifica connessione
         if (!hasNetwork()) {
             Toast.makeText(this, "Errore di connessione", Toast.LENGTH_SHORT).show()
@@ -116,19 +147,18 @@ class LoginActivity : AppCompatActivity() {
 
         //verifica email
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            Toast.makeText(this, "Email non valida", Toast.LENGTH_SHORT).show()
+            Email.error = "Email non valida"
             return
         }
 
         //verifica password
         if (password.length < 8) {
-            Toast.makeText(this, "Password troppo corta (min 8)", Toast.LENGTH_SHORT).show()
+            Password.error = "Password troppo corta (min 8 caratteri)"
             return
         }
 
 
-        val btn = findViewById<MaterialButton>(R.id.LoginButton)
-        btn?.isEnabled = false
+        loginButton.isEnabled = false
 
 
 
@@ -143,15 +173,41 @@ class LoginActivity : AppCompatActivity() {
             } catch (e: FirebaseAuthException) {
                 val code = e.errorCode
                 Log.w(TAG, "LOGIN FAIL code=$code msg=${e.localizedMessage}", e)
-                val msg = when (code) {
-                    "ERROR_INVALID_EMAIL" -> "Email non valida"
-                    "ERROR_USER_NOT_FOUND" -> "Utente non trovato"
-                    "ERROR_WRONG_PASSWORD" -> "Password errata"
-                    "ERROR_TOO_MANY_REQUESTS" -> "Troppi tentativi. Riprova più tardi"
-                    "ERROR_NETWORK_REQUEST_FAILED" -> "Errore di rete"
-                    else -> "Accesso fallito ($code)"
+
+                // mappo gli errori ai campi se possibile
+                when (code) {
+                    "ERROR_INVALID_EMAIL" -> {
+                        Email.error = "Email non valida"
+                    }
+                    "ERROR_USER_NOT_FOUND" -> {
+                        Email.error = "Utente non trovato"
+                    }
+                    "ERROR_WRONG_PASSWORD" -> {
+                        Password.error = "Password errata"
+                    }
+                    "ERROR_TOO_MANY_REQUESTS" -> {
+                        Toast.makeText(
+                            this@LoginActivity,
+                            "Troppi tentativi. Riprova più tardi",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                    "ERROR_NETWORK_REQUEST_FAILED" -> {
+                        Toast.makeText(
+                            this@LoginActivity,
+                            "Errore di rete",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                    else -> {
+                        Toast.makeText(
+                            this@LoginActivity,
+                            "Accesso fallito ($code)",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
                 }
-                Toast.makeText(this@LoginActivity, msg, Toast.LENGTH_SHORT).show()
+
                 updateUI(null)
 
             } catch (e: TimeoutCancellationException) {
@@ -164,7 +220,7 @@ class LoginActivity : AppCompatActivity() {
                 Toast.makeText(this@LoginActivity, "Unexpected error", Toast.LENGTH_SHORT).show()
                 updateUI(null)
             } finally {
-                btn?.isEnabled = true
+                loginButton.isEnabled = true
             }
         }
     }
