@@ -51,6 +51,7 @@ dependencies {
     implementation(libs.material)
     implementation(libs.colorpickerview)
     implementation(libs.amazon.ion.java)
+    implementation(libs.googleid)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
