@@ -42,7 +42,39 @@ class RegisterActivity : AppCompatActivity() {
             insets
         }
 
-        
+        arrowBack = requireNotNull(findViewById(R.id.arrowBack)){
+            "Freccia indietro non trovata nel layout"
+        }
+
+        Username = requireNotNull(findViewById(R.id.username)){
+            "Contenitore username (TextInputLayout) non trovato nel layout"
+        }
+
+        txtUsername = requireNotNull(findViewById(R.id.txtUsername)){
+            "EditText username non trovato nel layout"
+        }
+
+        addProfilePic = requireNotNull(findViewById(R.id.addIcon)){
+            "Aggiungi foto profilo non trovata nel layout"
+        }
+
+        Email = requireNotNull(findViewById(R.id.Email)){
+            "Contenitore email (TextInputLayout) non trovato nel layout"
+        }
+
+        txtEmail = requireNotNull(findViewById(R.id.textEmail)){
+            "EditText email non trovato nel layout"
+        }
+
+        Password = requireNotNull(findViewById(R.id.Password)){
+            "Contenitore password (TextInputLayout) non trovato nel layout"
+        }
+
+        txtPassword = requireNotNull(findViewById(R.id.textPassword)){
+            "EditText password non trovato nel layout"
+        }
+
+
 
 
     }
