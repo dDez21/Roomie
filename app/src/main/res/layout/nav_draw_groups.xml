@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -13,16 +15,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="4dp"
-        android:layout_gravity="center_horizontal">
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/nav_item_picked">
 
         <TextView
             android:id="@+id/myGroups"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/my_groups"
+            style="@style/TitleBoxStyle"
             android:textStyle="bold"
-            android:textColor="@color/onPrimaryColor"
-            android:textSize="18sp"
+            android:textColor="@color/surfaceColor"
             android:layout_centerVertical="true"/>
 
         <ImageButton
@@ -30,18 +33,31 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_alignParentEnd="true"
+            android:scaleType="centerCrop"
             android:background="@android:color/transparent"
             android:src="@drawable/new_category"
             android:layout_centerVertical="true"/>
     </RelativeLayout>
+
+
+    <!-- Linea divisoria-->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/onPrimaryColor"
+        android:layout_marginTop="5dp"
+        />
+
 
     <!-- Elenco gruppi -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_groups"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingStart="12dp"
-        android:paddingBottom="8dp"/>
+        android:maxHeight="300dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"/>
+
 
     <!-- Linea divisoria-->
     <View

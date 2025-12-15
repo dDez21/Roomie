@@ -9,7 +9,7 @@
 
                 <TextView
                     android:id="@+id/actionTitle"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Azione eseguita"
                     style="@style/ActionStyle"
@@ -24,18 +24,6 @@
                     style="@style/SmallStyle"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/actionTitle"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
-
-                <!-- chi ha fatto l'azione -->
-                <TextView
-                    android:id="@+id/userAction"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Utente"
-                    style="@style/BottomBarStyle"
-                    android:textColor="@color/onSurfaceColor"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

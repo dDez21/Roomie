@@ -52,6 +52,9 @@ dependencies {
     implementation(libs.colorpickerview)
     implementation(libs.amazon.ion.java)
     implementation(libs.googleid)
+    implementation(libs.google.material)
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.ui.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -61,4 +64,5 @@ dependencies {
     implementation("com.google.firebase:firebase-auth")
     implementation("com.firebaseui:firebase-ui-auth:8.0.2")
     implementation("com.google.android.gms:play-services-auth:21.2.0")
+    implementation("com.google.firebase:firebase-firestore-ktx:25.0.0")
 }

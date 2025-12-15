@@ -9,23 +9,11 @@
     android:elevation="6dp">
 
 
-<!--    devo mettere visibility:gone per la freccia indietro-->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/menu"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:theme="@style/Theme.Roomie">
-
-        <ImageButton
-            android:id="@+id/btnHamburger"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:background="@android:color/transparent"
-            android:src="@drawable/navigation_drawer"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"/>
 
         <include
             android:id="@+id/top_bar"
@@ -34,151 +22,24 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
-
-
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/calendarCard"
-            android:layout_width="350dp"
-            android:layout_height="300dp"
-            style="@style/ElevatedCard"
-            app:layout_constraintTop_toBottomOf="@id/top_bar"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="8dp">
-
-            <CalendarView
-                android:id="@+id/calendarView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:firstDayOfWeek="2"
-                android:theme="@style/ThemeOverlay.Roomie.Calendar"
-                android:showWeekNumber="false"
-                android:focusedMonthDateColor="@color/daysColor"
-                android:unfocusedMonthDateColor="@color/outsideMonthDaysColor"
-                android:weekDayTextAppearance="@style/CalendarWeekDayText"
-             android:dateTextAppearance="@style/CalendarDateText"/>
-        </com.google.android.material.card.MaterialCardView>
-
-
-        <!-- categorie, il font per la singola categoria sta in single_category, il bottone va aggiunto a fine recycleview, crea dialog per visualizzare/creare categoria-->
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/categoryRecycler"
-            android:layout_width="350dp"
-            android:layout_height="40dp"
-            app:layout_constraintTop_toBottomOf="@id/calendarCard"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="8dp"
-            android:overScrollMode="never"
-            android:nestedScrollingEnabled="false"
-            android:scrollbars="none"/>
-
-
-
-        <!-- contenitore impegni -->
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/commitmentsDailyContainer"
-            android:layout_width="350dp"
-            android:layout_height="140dp"
-            app:layout_constraintTop_toBottomOf="@id/categoryRecycler"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="8dp">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-
-                <ImageButton
-                    android:id="@+id/newCommitment"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:background="@android:color/transparent"
-                    android:src="@drawable/new_category"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:paddingStart="10dp"
-                    app:tint="@color/onSurfaceColor"/>
-
-
-                <!-- data corrente -->
-                <TextView
-                    android:id="@+id/currentDate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Data Attuale"
-                    android:paddingEnd="10dp"
-                    style="@style/TitleBoxStyle"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"/>
-
-
-                <!-- separatore -->
-                <View
-                    android:id="@+id/divider"
-                    android:layout_width="0dp"
-                    android:layout_height="3dp"
-                    android:background="@color/backgroundColor"
-                    app:layout_constraintTop_toBottomOf="@id/currentDate"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_marginTop="2dp"/>
-
-
-    <!--            elenco impegni del giorno-->
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/commitmentsContainer"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/divider"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginEnd="15dp"
-                    android:nestedScrollingEnabled="false"
-                    android:scrollbars="none"
-                    android:overScrollMode="never"/>
-
-                <!--  lo stile degli elementi da inserire sono nel file single_commitment-->
-                <!-- visione dell'impegno = vista creazione impegno ma con diversi input di testo -->
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </com.google.android.material.card.MaterialCardView>
-
-
-        <!-- pulsante aggiunta spesa -->
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fabAdd"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:backgroundTint="@color/tertiaryColor"
-            android:src="@drawable/add_purchase"
-            app:fabCustomSize="70dp"
-            app:maxImageSize="80dp"
-            app:tint="@null"
-            android:elevation="16dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginBottom="70dp"/>
-
-
-        <!-- barra sotto -->
-        <com.google.android.material.bottomnavigation.BottomNavigationView
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/fragmentContainer"
+            android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"
-            android:layout_height="90dp"
-            style="@style/bottomNavigationBar"
-            app:menu="@menu/bottom_bar_menu"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toBottomOf="@id/top_bar"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:navGraph="@navigation/nav_graph"
+            app:defaultNavHost="true" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navView"
-        android:layout_width="260dp"
+        android:layout_width="350dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
@@ -186,8 +47,10 @@
         app:headerLayout="@layout/nav_draw_groups"
         app:itemTextColor="@color/onPrimaryColor"
         app:menu="@menu/navigation_drawer_menu"
+        app:itemTextAppearance="@style/userStyle"
         app:itemIconTint="@color/surfaceColor"
-        app:itemBackground="@drawable/nav_item_picked"
         app:itemHorizontalPadding="16dp"
-        app:itemVerticalPadding="8dp"/>
+        app:itemVerticalPadding="8dp"
+        app:menuGravity="top"
+        android:overScrollMode="never"/>
 </androidx.drawerlayout.widget.DrawerLayout>

@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/menu"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:theme="@style/Theme.Roomie"
+    android:elevation="6dp"
+    tools:context=".fragment.MenuFragment">
+
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/calendarCard"
+        android:layout_width="350dp"
+        android:layout_height="300dp"
+        style="@style/ElevatedCard"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <CalendarView
+            android:id="@+id/calendarView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:firstDayOfWeek="2"
+            android:theme="@style/ThemeOverlay.Roomie.Calendar"
+            android:showWeekNumber="false"
+            android:focusedMonthDateColor="@color/daysColor"
+            android:unfocusedMonthDateColor="@color/outsideMonthDaysColor"
+            android:weekDayTextAppearance="@style/CalendarWeekDayText"
+            android:dateTextAppearance="@style/CalendarDateText"/>
+    </com.google.android.material.card.MaterialCardView>
+
+
+    <!-- categorie, il font per la singola categoria sta in single_category, il bottone va aggiunto a fine recycleview, crea dialog per visualizzare/creare categoria-->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/categoryRecycler"
+        android:layout_width="350dp"
+        android:layout_height="40dp"
+        app:layout_constraintTop_toBottomOf="@id/calendarCard"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="10dp"
+        android:overScrollMode="never"
+        android:nestedScrollingEnabled="false"
+        android:scrollbars="none"/>
+
+
+
+    <!-- contenitore impegni -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/commitmentsDailyContainer"
+        android:layout_width="350dp"
+        android:layout_height="270dp"
+        app:layout_constraintBottom_toTopOf="@id/newPurchase"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="10dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageButton
+                android:id="@+id/newCommitment"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@android:color/transparent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/new_category"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="10dp"
+                app:tint="@color/onSurfaceColor"/>
+
+
+            <!-- data corrente -->
+            <TextView
+                android:id="@+id/currentDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Data Attuale"
+                android:paddingEnd="10dp"
+                android:paddingTop="5dp"
+                style="@style/TitleBoxStyle"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <!-- separatore -->
+            <View
+                android:id="@+id/divider"
+                android:layout_width="0dp"
+                android:layout_height="3dp"
+                android:background="@color/backgroundColor"
+                app:layout_constraintTop_toBottomOf="@id/currentDate"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="10dp"/>
+
+                <!--            elenco impegni del giorno-->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/commitmentsContainer"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/divider"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                android:nestedScrollingEnabled="false"
+                android:scrollbars="none"
+                android:overScrollMode="never"/>
+
+            <!--  lo stile degli elementi da inserire sono nel file single_commitment-->
+            <!-- visione dell'impegno = vista creazione impegno ma con diversi input di testo -->
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+
+    <!-- pulsante aggiunta spesa -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/newPurchase"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:backgroundTint="@color/tertiaryColor"
+        android:src="@drawable/add_purchase"
+        app:fabCustomSize="70dp"
+        app:maxImageSize="80dp"
+        app:tint="@null"
+        android:elevation="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="110dp"/>
+
+
+    <!-- barra sotto -->
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomBar"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        style="@style/bottomNavigationBar"
+        app:menu="@menu/bottom_bar_menu"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+

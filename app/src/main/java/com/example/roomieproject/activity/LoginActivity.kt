@@ -36,6 +36,7 @@ import kotlinx.coroutines.withTimeout
 
 
 class LoginActivity : AppCompatActivity() {
+
     private lateinit var auth: FirebaseAuth //per autenticazione normale e google
     private lateinit var credentialManager: CredentialManager // API autenticazione google
     private lateinit var Email: TextInputLayout
@@ -79,7 +80,6 @@ class LoginActivity : AppCompatActivity() {
         txtPassword = requireNotNull(findViewById(R.id.textPassword)) {
             "EditText password non trovato nel layout"
         }
-
         forgotPpw = requireNotNull(findViewById(R.id.forgotPassword)) {
             "forgotPassword non trovato nel layout"
         }
@@ -96,7 +96,7 @@ class LoginActivity : AppCompatActivity() {
 
 
         forgotPpw.setOnClickListener {
-            //startActivity(Intent(this, ForgotPasswordActivity::class.java))
+            startActivity(Intent(this, ForgotPasswordActivity::class.java))
         }
 
         // login email/password
@@ -126,11 +126,11 @@ class LoginActivity : AppCompatActivity() {
 
 
     //verifico se ho connessione ad internet
-    private fun hasNetwork(): Boolean {
-        val cm = getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
-        val nc = cm.getNetworkCapabilities(cm.activeNetwork) ?: return false
-        return nc.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
-    }
+    //private fun hasNetwork(): Boolean {
+    //    val cm = getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
+    //    val nc = cm.getNetworkCapabilities(cm.activeNetwork) ?: return false
+    //    return nc.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
+    //}
 
 
     //login classico con email e ppw
@@ -140,23 +140,22 @@ class LoginActivity : AppCompatActivity() {
         Password.error = null
 
         //verifica connessione
-        if (!hasNetwork()) {
-            Toast.makeText(this, "Errore di connessione", Toast.LENGTH_SHORT).show()
-            return
-        }
+//        if (!hasNetwork()) {
+//            Toast.makeText(this, "Errore di connessione", Toast.LENGTH_SHORT).show()
+//            return
+//        }
 
         //verifica email
-        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+        if (email.isBlank() || !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             Email.error = "Email non valida"
             return
         }
 
-        //verifica password
-        if (password.length < 8) {
-            Password.error = "Password troppo corta (min 8 caratteri)"
+        //verifico password
+        if (password.isBlank()) {
+            Password.error = "Inserisci la password"
             return
         }
-
 
         loginButton.isEnabled = false
 
@@ -280,7 +279,7 @@ class LoginActivity : AppCompatActivity() {
         if (user != null) {
             // Vai alla menu app
             val intent = Intent(this, MenuActivity::class.java).apply {
-                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK  //evito di tornare indietro al login dalla schermata menu
             }
             startActivity(intent)
         } else {

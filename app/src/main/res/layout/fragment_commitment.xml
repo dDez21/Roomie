@@ -2,20 +2,11 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/menu"
+    android:id="@+id/fragment_commitment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:theme="@style/Theme.Roomie">
-
-
-    <!-- menu in alto -->
-    <include
-        layout="@layout/top_bar"
-        android:id="@+id/top_bar"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        />
+    android:theme="@style/Theme.Roomie"
+    tools:context=".fragment.CommitmentFragment">
 
 
     <!-- nome impegno -->
@@ -24,8 +15,7 @@
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:hint="@string/commitmentName"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@id/top_bar"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
@@ -257,6 +247,7 @@
 
     <!-- crea impegno -->
     <Button
+        android:id="@+id/createCommit"
         android:layout_width="150dp"
         android:layout_height="45dp"
         style="@style/Button"

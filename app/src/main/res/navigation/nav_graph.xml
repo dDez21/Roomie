@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/menuFragment">
+
+    <fragment
+        android:id="@+id/menuFragment"
+        android:name="com.example.roomieproject.fragment.MenuFragment"/>
+
+    <fragment
+        android:id="@+id/memoryFragment"
+        android:name="com.example.roomieproject.fragment.MemoryFragment"/>
+
+    <fragment
+        android:id="@+id/groupSectionFragment"
+        android:name="com.example.roomieproject.fragment.GroupSectionFragment"/>
+
+    <fragment
+        android:id="@+id/userFragment"
+        android:name="com.example.roomieproject.fragment.UserFragment"/>
+
+    <fragment
+        android:id="@+id/newCommitmentFragment"
+        android:name="com.example.roomieproject.fragment.CommitmentFragment"/>
+
+    <fragment
+        android:id="@+id/newPurchaseFragment"
+        android:name="com.example.roomieproject.fragment.newPurchaseFragment"/>
+
+</navigation>

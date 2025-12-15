@@ -24,7 +24,7 @@
             android:fontFamily="@style/BodyStyle"
             android:layout_marginEnd="5dp"/>
 
-        <View
+        <ImageView
             android:id="@+id/colorCategoryCommitment"
             android:layout_width="23dp"
             android:layout_height="23dp"
