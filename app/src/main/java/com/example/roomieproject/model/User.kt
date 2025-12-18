@@ -3,20 +3,18 @@ package com.example.roomieproject.model
 import androidx.annotation.Keep
 import com.google.firebase.firestore.IgnoreExtraProperties
 
-
 @Keep
 @IgnoreExtraProperties
-data class Group(
-    val groupName: String = "",
-    val groupLogo: String? = null,
-    val groupMembers: List<String> = emptyList(),
-    val groupInvited: List<String> = emptyList(),
+data class User(
+    val userName: String = "",
+    val userEmail: String = "",
+    val userLogo: String? = null
 ){
     //verifico che i dati esistano
     fun isValid(): Boolean =
-        groupName.isNotBlank()
+        userName.isNotBlank() && userEmail.isNotBlank()
 
     //in caso non ci fosse immagine inserita
     fun logoOrDefault(defaultUrlOrKey: String): String =
-        if (!groupLogo.isNullOrBlank()) groupLogo else defaultUrlOrKey
+        if (!userLogo.isNullOrBlank()) userLogo else defaultUrlOrKey
 }

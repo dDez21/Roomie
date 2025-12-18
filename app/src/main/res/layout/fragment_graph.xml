@@ -1,28 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/menu"
+    android:id="@+id/fragment_graph"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:theme="@style/Theme.Roomie">
-
-    <include
-        android:id="@+id/top_bar"
-        layout="@layout/top_bar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    android:theme="@style/Theme.Roomie"
+    tools:context=".fragment.GraphFragment">
 
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/commitmentsDailyContainer"
         android:layout_width="350dp"
         android:layout_height="380dp"
-        android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/top_bar">
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -32,7 +26,7 @@
 
             <!-- grafico -->
             <com.github.mikephil.charting.charts.PieChart
-                android:id="@+id/graph"
+                android:id="@+id/graphDraw"
                 android:layout_width="220dp"
                 android:layout_height="220dp"
                 android:layout_gravity="center"/>
@@ -51,9 +45,6 @@
                 android:id="@+id/commitmentsContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/divider"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginTop="5dp"
                 android:paddingTop="5dp"
                 android:paddingBottom="5dp"
@@ -88,6 +79,7 @@
                 <TextView
                     android:id="@+id/totalUser"
                     android:layout_height="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_weight="1"
                     android:text="@string/total"
                     style="@style/TitleBoxStyle"

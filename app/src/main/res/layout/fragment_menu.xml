@@ -54,7 +54,7 @@
         android:id="@+id/commitmentsDailyContainer"
         android:layout_width="350dp"
         android:layout_height="270dp"
-        app:layout_constraintBottom_toTopOf="@id/newPurchase"
+        app:layout_constraintBottom_toTopOf="@id/newExpense"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginBottom="10dp">
@@ -124,11 +124,11 @@
 
     <!-- pulsante aggiunta spesa -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/newPurchase"
+        android:id="@+id/newExpense"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:backgroundTint="@color/tertiaryColor"
-        android:src="@drawable/add_purchase"
+        android:src="@drawable/add_expense"
         app:fabCustomSize="70dp"
         app:maxImageSize="80dp"
         app:tint="@null"

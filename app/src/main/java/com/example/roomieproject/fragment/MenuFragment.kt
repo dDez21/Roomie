@@ -7,7 +7,9 @@ import android.widget.ImageButton
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.setupWithNavController
 import com.example.roomieproject.R
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -21,7 +23,8 @@ class MenuFragment : Fragment(R.layout.fragment_menu) {
     private lateinit var currentDate: TextView //data corrente
     private var selectedDate: Long = System.currentTimeMillis() //data selezionata
     private lateinit var newCommit: ImageButton //nuovo impegno
-    private lateinit var newPurchase: FloatingActionButton //nuova spesa
+    private lateinit var newExpense: FloatingActionButton //nuova spesa
+    private lateinit var bottomBar: BottomNavigationView
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?){
@@ -30,7 +33,8 @@ class MenuFragment : Fragment(R.layout.fragment_menu) {
         calendarView = view.findViewById(R.id.calendarView)
         currentDate = view.findViewById(R.id.currentDate)
         newCommit = view.findViewById(R.id.newCommitment)
-        newPurchase = view.findViewById(R.id.newPurchase)
+        newExpense = view.findViewById(R.id.newExpense)
+        bottomBar = view.findViewById(R.id.bottomBar)
 
 
         //imposto data all'inizio
@@ -56,9 +60,13 @@ class MenuFragment : Fragment(R.layout.fragment_menu) {
 
 
         //nuova spesa
-        newPurchase.setOnClickListener {
-            findNavController().navigate(R.id.newPurchaseFragment)
+        newExpense.setOnClickListener {
+            findNavController().navigate(R.id.newExpenseFragment)
         }
+
+
+        //navigazione barra sotto
+        bottomBar.setupWithNavController(findNavController())
     }
 }
 

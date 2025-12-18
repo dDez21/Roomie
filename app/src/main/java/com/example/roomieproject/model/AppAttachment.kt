@@ -6,9 +6,9 @@ import com.google.firebase.firestore.IgnoreExtraProperties
 
 @Keep
 @IgnoreExtraProperties
-data class Category(
-    val categoryName: String,
-    val categoryColor: String
-){
-    fun isValid(): Boolean = categoryName.isNotBlank()
+data class AppAttachment (
+    val type: AttachmentType = AttachmentType.IMAGE,
+    val url: String = ""
+) {
+    enum class AttachmentType { IMAGE, AUDIO }
 }

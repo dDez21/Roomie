@@ -11,9 +11,9 @@
         android:title="@string/board"/>
 
     <item
-        android:id="@+id/purchase"
-        android:icon="@drawable/purchase"
-        android:title="@string/purchase"/>
+        android:id="@+id/expense"
+        android:icon="@drawable/expense"
+        android:title="@string/expense"/>
 
     <item
         android:id="@+id/graph"

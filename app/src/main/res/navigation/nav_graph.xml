@@ -25,7 +25,23 @@
         android:name="com.example.roomieproject.fragment.CommitmentFragment"/>
 
     <fragment
-        android:id="@+id/newPurchaseFragment"
-        android:name="com.example.roomieproject.fragment.newPurchaseFragment"/>
+        android:id="@+id/newExpenseFragment"
+        android:name="com.example.roomieproject.fragment.newExpenseFragment"/>
+
+    <fragment
+        android:id="@+id/group"
+        android:name="com.example.roomieproject.fragment.GroupFragment"/>
+
+    <fragment
+        android:id="@+id/board"
+        android:name="com.example.roomieproject.fragment.BoardFragment"/>
+
+    <fragment
+        android:id="@+id/expense"
+        android:name="com.example.roomieproject.fragment.ExpenseFragment"/>
+
+    <fragment
+        android:id="@+id/graph"
+        android:name="com.example.roomieproject.fragment.GraphFragment"/>
 
 </navigation>
