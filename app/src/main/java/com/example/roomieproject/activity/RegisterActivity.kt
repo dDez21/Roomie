@@ -1,7 +1,10 @@
 package com.example.roomieproject.activity
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.os.Build
 import android.os.Bundle
 import android.util.Patterns
@@ -14,21 +17,27 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.roomieproject.R
+import com.example.roomieproject.viewmodel.AuthViewModel
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseAuthException
-import com.google.firebase.auth.UserProfileChangeRequest
+import androidx.activity.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import com.example.roomieproject.util.AuthState
+import kotlinx.coroutines.launch
+
 
 class RegisterActivity : AppCompatActivity() {
 
-    private lateinit var auth: FirebaseAuth
+    private val vm: AuthViewModel by viewModels()
     private lateinit var arrowBack: ImageButton
     private lateinit var Username: TextInputLayout
     private lateinit var txtUsername: TextInputEditText
     private lateinit var addProfilePic: FloatingActionButton
+    private var userPicUrl: android.net.Uri? = null
     private lateinit var Email: TextInputLayout
     private lateinit var txtEmail: TextInputEditText
     private lateinit var Password: TextInputLayout
@@ -36,12 +45,14 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var registerButton: MaterialButton
 
 
+
     // Per aprire la galleria
     private val pickImage = registerForActivityResult(ActivityResultContracts.GetContent()) {
         uri ->if (uri != null) {
-                    addProfilePic.setImageURI(uri)}  //Sostituisce l’icona del FAB con la foto scelta
+            userPicUrl = uri
+            addProfilePic.setImageURI(uri)  //Sostituisce l’icona del FAB con la foto scelta
         }
-
+    }
 
     // Per chiedere i permessi
     private val permissionRequest = registerForActivityResult(ActivityResultContracts.RequestPermission()) {
@@ -56,8 +67,6 @@ class RegisterActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_register)
 
-        auth = FirebaseAuth.getInstance() //per autenticazione
-
         //collego a id del layout
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.register)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -65,42 +74,16 @@ class RegisterActivity : AppCompatActivity() {
             insets
         }
 
-        arrowBack = requireNotNull(findViewById(R.id.arrowBack)){
-            "Freccia indietro non trovata nel layout"
-        }
-
-        Username = requireNotNull(findViewById(R.id.username)){
-            "Contenitore username (TextInputLayout) non trovato nel layout"
-        }
-
-        txtUsername = requireNotNull(findViewById(R.id.txtUsername)){
-            "EditText username non trovato nel layout"
-        }
-
-        addProfilePic = requireNotNull(findViewById(R.id.addIcon)){
-            "Bottone Aggiungi foto profilo non trovata nel layout"
-        }
-
-        Email = requireNotNull(findViewById(R.id.Email)){
-            "Contenitore email (TextInputLayout) non trovato nel layout"
-        }
-
-        txtEmail = requireNotNull(findViewById(R.id.textEmail)){
-            "EditText email non trovato nel layout"
-        }
-
-        Password = requireNotNull(findViewById(R.id.Password)){
-            "Contenitore password (TextInputLayout) non trovato nel layout"
-        }
-
-        txtPassword = requireNotNull(findViewById(R.id.textPassword)){
-            "EditText password non trovato nel layout"
-        }
-
-        registerButton = requireNotNull(findViewById(R.id.CreateAccount)){
-            "Bottone crea account non trovato nel layout"
-        }
-
+        //associo riferimenti variabili istanziate
+        arrowBack = findViewById(R.id.arrowBack)
+        Username = findViewById(R.id.username)
+        txtUsername = findViewById(R.id.txtUsername)
+        addProfilePic = findViewById(R.id.addIcon)
+        Email = findViewById(R.id.Email)
+        txtEmail = findViewById(R.id.textEmail)
+        Password = findViewById(R.id.Password)
+        txtPassword = findViewById(R.id.textPassword)
+        registerButton = findViewById(R.id.CreateAccount)
 
 
         //imposto azioni
@@ -108,10 +91,39 @@ class RegisterActivity : AppCompatActivity() {
             onBackPressedDispatcher.onBackPressed()
         }
 
-
         addProfilePic.setOnClickListener {
             selectImage()
         }
+
+        //gestione navigazione
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                vm.state.collect { state->
+                    when (state) {
+                        //evito sommarsi di chiamate
+                        AuthState.Idle -> registerButton.isEnabled = true
+                        AuthState.Loading -> registerButton.isEnabled = false
+
+                        //utente creato
+                        is AuthState.Success -> {
+                            val intent = Intent(this@RegisterActivity, MenuActivity::class.java).apply {
+                                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                            }
+                            startActivity(intent)
+                        }
+
+                        //errore
+                        is AuthState.Error -> {
+                            Toast.makeText(
+                                this@RegisterActivity,
+                                state.e.message ?: "Errore registrazione",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            vm.setIdle()
+                        }
+                }
+            }
+        }}
 
 
         registerButton.setOnClickListener {
@@ -120,9 +132,14 @@ class RegisterActivity : AppCompatActivity() {
             val password = txtPassword.text?.toString()?.trim().orEmpty()
 
             if (!validateInput(username, email, password)) return@setOnClickListener
-
-            createAccount(username, email, password)
+            vm.register(username, email, password, userPicUrl)
         }
+    }
+
+    private fun hasNetwork(): Boolean {
+        val cm = getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
+        val nc = cm.getNetworkCapabilities(cm.activeNetwork) ?: return false
+        return nc.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
     }
 
 
@@ -139,73 +156,21 @@ class RegisterActivity : AppCompatActivity() {
             Username.error = "Inserisci uno username"
             isValid = false
         }
-
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             Email.error = "Inserisci una email valida"
             isValid = false
         }
-
         if (password.length < 8) {
             Password.error = "La password deve avere almeno 8 caratteri"
+            isValid = false
+        }
+        if (!hasNetwork()) {
+            Toast.makeText(this, "Network connection error", Toast.LENGTH_SHORT).show()
             isValid = false
         }
         return isValid
     }
 
-
-    //creo account
-    private fun createAccount(username: String, email: String, password: String) {
-        registerButton.isEnabled = false
-
-        //vengono effettuate verifiche da Firebase su email e ppw
-        auth.createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener(this) { task ->
-                registerButton.isEnabled = true
-
-                //risultato operazione
-                if (task.isSuccessful) {
-                    val user = task.result?.user
-
-                    // aggiorno il displayName con lo username
-                    user?.let {
-                        val profileUpdates = UserProfileChangeRequest.Builder()
-                            .setDisplayName(username)
-                            .build()
-                        it.updateProfile(profileUpdates)
-                    }
-
-                    Toast.makeText(
-                        this,
-                        "Account creato! Ora puoi effettuare il login.",
-                        Toast.LENGTH_SHORT
-                    ).show()
-
-                    // torno alla schermata precedente (LoginActivity)
-                    finish()
-
-                } else {
-                    val e = task.exception
-                    val code = (e as? FirebaseAuthException)?.errorCode
-
-                    when (code) {
-                        "ERROR_EMAIL_ALREADY_IN_USE" ->
-                            Email.error = "Email già registrata"
-                        "ERROR_INVALID_EMAIL" ->
-                            Email.error = "Email non valida"
-                        "ERROR_WEAK_PASSWORD" ->
-                            Password.error = "Password troppo debole"
-                        "ERROR_NETWORK_REQUEST_FAILED" ->
-                            Toast.makeText(this, "Errore di rete", Toast.LENGTH_SHORT).show()
-                        else ->
-                            Toast.makeText(
-                                this,
-                                "Registrazione fallita${if (code != null) " ($code)" else ""}",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                    }
-                }
-            }
-    }
 
 
     private fun selectImage() {

@@ -4,16 +4,25 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.roomieproject.R
 import com.example.roomieproject.model.Group
 
 
-class GroupsAdapter(
-    private var groups: List<Group>,
-    private var onGroupClick: (Group) -> Unit
-    ) : RecyclerView.Adapter<GroupsAdapter.GroupViewHolder>() {
+class DrawerGroupsAdapter(
+    private val onGroupClick: (groupId: String) -> Unit
+) : ListAdapter<Group, DrawerGroupsAdapter.GroupViewHolder>(Diff) {
 
+    //singolo elemento
+    object Diff : DiffUtil.ItemCallback<Group>() {
+        override fun areItemsTheSame(old: Group, new: Group) =
+            old.groupId == new.groupId
+
+        override fun areContentsTheSame(old: Group, new: Group) =
+            old == new
+    }
 
     //singola riga
     inner class GroupViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
@@ -22,9 +31,8 @@ class GroupsAdapter(
         //estraggo nome gruppo da db
         fun bind(group: Group){
             groupName.text = group.groupName
-
             itemView.setOnClickListener{ //reazione al click
-                onGroupClick(group)
+                onGroupClick(group.groupId)
             }
         }
     }
@@ -38,12 +46,8 @@ class GroupsAdapter(
 
     //per riempire riga con i dati
     override fun onBindViewHolder(holder: GroupViewHolder, position: Int) {
-        holder.bind(groups[position])
+        holder.bind(getItem(position))
     }
-
-
-    //definisce numero righe
-    override fun getItemCount(): Int = groups.size
 }
 
 

@@ -6,7 +6,12 @@
 
     <fragment
         android:id="@+id/menuFragment"
-        android:name="com.example.roomieproject.fragment.MenuFragment"/>
+        android:name="com.example.roomieproject.fragment.MenuFragment">
+        <argument
+            android:name="groupId"
+            app:argType="string"
+            android:defaultValue=""/>
+    </fragment>
 
     <fragment
         android:id="@+id/memoryFragment"

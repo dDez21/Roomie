@@ -7,6 +7,7 @@ import com.google.firebase.firestore.IgnoreExtraProperties
 @Keep
 @IgnoreExtraProperties
 data class Group(
+    val groupId: String = "",
     val groupName: String = "",
     val groupLogo: String? = null,
     val groupMembers: List<String> = emptyList(),

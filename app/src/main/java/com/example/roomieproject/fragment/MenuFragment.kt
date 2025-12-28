@@ -18,7 +18,6 @@ import java.util.Calendar
 
 class MenuFragment : Fragment(R.layout.fragment_menu) {
 
-
     private lateinit var calendarView: CalendarView //calendario
     private lateinit var currentDate: TextView //data corrente
     private var selectedDate: Long = System.currentTimeMillis() //data selezionata
@@ -30,20 +29,21 @@ class MenuFragment : Fragment(R.layout.fragment_menu) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?){
         super.onViewCreated(view, savedInstanceState)
 
-        calendarView = view.findViewById(R.id.calendarView)
-        currentDate = view.findViewById(R.id.currentDate)
-        newCommit = view.findViewById(R.id.newCommitment)
-        newExpense = view.findViewById(R.id.newExpense)
-        bottomBar = view.findViewById(R.id.bottomBar)
-
+        //prendo l'id del gruppo corrente
+        val groupId = arguments?.getString("groupId").orEmpty()
+        if (groupId.isNotBlank()){
+            //continuo istanziamento group
+        }
 
         //imposto data all'inizio
         val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
         selectedDate = calendarView.date
+        currentDate = view.findViewById(R.id.currentDate)
         currentDate.text = sdf.format(Date(selectedDate))
 
 
         //aggiorno data a quella selezionata sul calendario
+        calendarView = view.findViewById(R.id.calendarView)
         calendarView.setOnDateChangeListener { _, year, month, dayOfMonth ->
             val cal = Calendar.getInstance().apply {
                 set(year, month, dayOfMonth)
@@ -54,18 +54,21 @@ class MenuFragment : Fragment(R.layout.fragment_menu) {
 
 
         //nuovo impegno
+        newCommit = view.findViewById(R.id.newCommitment)
         newCommit.setOnClickListener {
             findNavController().navigate(R.id.newCommitmentFragment)
         }
 
 
         //nuova spesa
+        newExpense = view.findViewById(R.id.newExpense)
         newExpense.setOnClickListener {
             findNavController().navigate(R.id.newExpenseFragment)
         }
 
 
         //navigazione barra sotto
+        bottomBar = view.findViewById(R.id.bottomBar)
         bottomBar.setupWithNavController(findNavController())
     }
 }
