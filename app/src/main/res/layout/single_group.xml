@@ -9,4 +9,8 @@
     android:textColor="@color/onPrimaryColor"
     style="@style/userStyle"
     android:textStyle="bold"
-    android:paddingStart="8dp"/>
+    android:paddingStart="8dp"
+    android:background="@drawable/drawer_group_background"
+    android:clickable="true"
+    android:focusable="true"
+    android:padding="12dp"/>

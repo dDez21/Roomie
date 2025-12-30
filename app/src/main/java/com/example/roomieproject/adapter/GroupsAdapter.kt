@@ -15,6 +15,25 @@ class DrawerGroupsAdapter(
     private val onGroupClick: (groupId: String) -> Unit
 ) : ListAdapter<Group, DrawerGroupsAdapter.GroupViewHolder>(Diff) {
 
+
+    //visualizzo gruppo scelto
+    private var groupSelectedId: String? = null
+    fun setSelected(groupId: String?){
+
+        if (groupSelectedId == groupId) return
+        val oldId = groupSelectedId
+        groupSelectedId = groupId
+        oldId?.let { id ->
+            val oldPos = currentList.indexOfFirst { it.groupId == id }
+            if (oldPos != -1) notifyItemChanged(oldPos)
+        }
+        groupId?.let { id ->
+            val newPos = currentList.indexOfFirst { it.groupId == id }
+            if (newPos != -1) notifyItemChanged(newPos)
+        }
+    }
+
+
     //singolo elemento
     object Diff : DiffUtil.ItemCallback<Group>() {
         override fun areItemsTheSame(old: Group, new: Group) =
@@ -31,6 +50,8 @@ class DrawerGroupsAdapter(
         //estraggo nome gruppo da db
         fun bind(group: Group){
             groupName.text = group.groupName
+            val selected = group.groupId == groupSelectedId
+            itemView.isActivated = selected
             itemView.setOnClickListener{ //reazione al click
                 onGroupClick(group.groupId)
             }

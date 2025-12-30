@@ -40,6 +40,7 @@ class MenuActivity : AppCompatActivity(){
     private lateinit var navView: NavigationView
     private lateinit var userName: TextView
     private lateinit var userIcon: ImageButton
+    private lateinit var groupsAdapter: DrawerGroupsAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -79,6 +80,12 @@ class MenuActivity : AppCompatActivity(){
 
         //attivo apertura menu utente
         userName = findViewById(R.id.userName)
+        userName.setOnClickListener {
+            if (navController.currentDestination?.id != R.id.userFragment) {
+                navController.navigate(R.id.userFragment)
+            }
+        }
+
         userIcon = findViewById(R.id.userAvatar)
         userIcon.setOnClickListener {
             if (navController.currentDestination?.id != R.id.userFragment) {
@@ -106,7 +113,8 @@ class MenuActivity : AppCompatActivity(){
         }
         ViewCompat.requestApplyInsets(header)
         val groups = header.findViewById<RecyclerView>(R.id.rv_groups)
-        val groupsAdapter = DrawerGroupsAdapter { groupId->
+        groupsAdapter = DrawerGroupsAdapter { groupId->
+            groupsAdapter.setSelected(groupId)
             drawerLayout.closeDrawer(GravityCompat.START)
             val group = bundleOf("groupId" to groupId)
             navController.navigate(R.id.menuFragment, group, androidx.navigation.navOptions {
@@ -124,21 +132,7 @@ class MenuActivity : AppCompatActivity(){
             navController.navigate(R.id.groupSectionFragment)
         }
 
-        //imposto drawer solo su  + caso alla creazione dell'utente
-        navController.addOnDestinationChangedListener { _, destination, args ->
-            val forcedNoGroup = args?.getBoolean("forcedNoGroup", false) ?: false
-            when (destination.id) {
-                R.id.menuFragment -> showDrawerMode()
-                R.id.groupSectionFragment -> {
-                    if (forcedNoGroup) showNoBackMode() else showBackMode()
-                }
-                else -> showBackMode()
-            }
-            if (destination.id == R.id.menuFragment) {
-                showDrawerMode()
-                vm.refreshGroups()
-            }
-        }
+
 
         //chiude drawer se faccio indietro mentre è aperto
         onBackPressedDispatcher.addCallback(this) {
@@ -175,6 +169,27 @@ class MenuActivity : AppCompatActivity(){
             }
         }
         vm.checkUser()
+
+
+        //gestisco navigazione
+        navController.addOnDestinationChangedListener { _, destination, args ->
+            val forcedNoGroup = args?.getBoolean("forcedNoGroup", false) ?: false
+            when (destination.id) {
+                R.id.menuFragment -> showDrawerMode()
+                R.id.groupSectionFragment -> {
+                    if (forcedNoGroup) showNoBackMode() else showBackMode()
+                }
+                else -> showBackMode()
+            }
+            if (destination.id == R.id.menuFragment) {
+                val gid = args?.getString("groupId")
+                groupsAdapter.setSelected(gid)
+                showDrawerMode()
+                vm.refreshGroups()
+            }
+        }
+
+
     }
 
     //carico dati utente per top bar
