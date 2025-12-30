@@ -59,6 +59,7 @@
             android:hint="@string/groupName">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/groupNameEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:autofillHints="username"
@@ -73,21 +74,12 @@
                 android:paddingBottom="10dp"/>
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/addIcon"
-            style="@style/logoImageFAB"
-            app:backgroundTint="@color/surfaceColor"
-            app:tint="@null"
-            android:layout_marginTop="15dp"/>
-
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/CreateAccount"
+            android:id="@+id/CreateGroup"
             style="@style/Button"
-            android:text="@string/CreateAccount"
+            android:text="@string/createGroup"
             android:layout_marginTop="20dp"/>
     </LinearLayout>
-
-
 
 
     <!-- visualizza richieste -->
@@ -108,6 +100,7 @@
             android:hint="@string/searchGroup">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/groupSearchEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:autofillHints="username"
@@ -127,16 +120,29 @@
             android:layout_marginTop="24dp"
             app:cardElevation="8dp">
 
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-            <!-- modello tipo elemento in single_group_request -->
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/groupsRecyclerView"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="15dp"
-                        android:nestedScrollingEnabled="false"
-                        android:scrollbars="none"
-                        android:overScrollMode="never"/>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/groupsRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="15dp"
+                    android:nestedScrollingEnabled="false"
+                    android:scrollbars="none"
+                    android:overScrollMode="never"/>
+
+                <TextView
+                    android:id="@+id/emptyInvitesText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Nessun invito in sospeso"
+                    android:visibility="gone"
+                    android:clickable="false"
+                    android:focusable="false"/>
+            </FrameLayout>
         </com.google.android.material.card.MaterialCardView>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

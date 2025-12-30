@@ -1,11 +1,8 @@
 package com.example.roomieproject.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.roomieproject.firebase.Firestore
-import com.example.roomieproject.model.User
+import com.example.roomieproject.firebase.UserFirestore
 import com.example.roomieproject.util.UserState
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,7 +12,7 @@ import kotlinx.coroutines.launch
 class MenuViewModel : ViewModel() {
 
     private val auth = FirebaseAuth.getInstance()
-    private val db = Firestore()
+    private val db = UserFirestore()
     //verifica se utente ha già gruppi o no
     private val _userState = MutableStateFlow<UserState>(UserState.Idle)
     val userState: StateFlow<UserState> = _userState
@@ -34,7 +31,7 @@ class MenuViewModel : ViewModel() {
         viewModelScope.launch {
             _userState.value = UserState.Loading
             try{
-                val groupList = db.getUserGroups(userUid)
+                val groupList = db.getUserGroups()
                 _userState.value =
                     if(groupList.isEmpty()) UserState.NoGroup
                     else UserState.HasGroups(groupList)
@@ -46,7 +43,11 @@ class MenuViewModel : ViewModel() {
     }
 
     suspend fun userData(): Pair<String, String?> {
-        val uid = auth.currentUser?.uid ?: return "" to null
-        return db.getUserData(uid)
+        return db.getUserData()
+    }
+
+    fun refreshGroups() {
+        alreadyCheck = false
+        checkUser()
     }
 }

@@ -1,5 +1,7 @@
 package com.example.roomieproject.activity
 
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.os.Bundle
 import android.util.Patterns
 import android.widget.Toast

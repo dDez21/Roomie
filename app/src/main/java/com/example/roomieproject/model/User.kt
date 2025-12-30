@@ -1,6 +1,7 @@
 package com.example.roomieproject.model
 
 import androidx.annotation.Keep
+import com.google.firebase.firestore.Exclude
 import com.google.firebase.firestore.IgnoreExtraProperties
 
 @Keep
@@ -11,10 +12,12 @@ data class User(
     val userLogo: String? = null
 ){
     //verifico che i dati esistano
+    @Exclude
     fun isValid(): Boolean =
         userName.isNotBlank() && userEmail.isNotBlank()
 
     //in caso non ci fosse immagine inserita
+    @Exclude
     fun logoOrDefault(defaultUrlOrKey: String): String =
         if (!userLogo.isNullOrBlank()) userLogo else defaultUrlOrKey
 }

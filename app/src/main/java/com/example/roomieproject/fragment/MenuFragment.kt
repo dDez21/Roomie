@@ -34,7 +34,7 @@ class MenuFragment : Fragment(R.layout.fragment_menu) {
         if (groupId.isNotBlank()){
             //continuo istanziamento group
         }
-
+        calendarView = view.findViewById(R.id.calendarView)
         //imposto data all'inizio
         val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
         selectedDate = calendarView.date
@@ -43,7 +43,6 @@ class MenuFragment : Fragment(R.layout.fragment_menu) {
 
 
         //aggiorno data a quella selezionata sul calendario
-        calendarView = view.findViewById(R.id.calendarView)
         calendarView.setOnDateChangeListener { _, year, month, dayOfMonth ->
             val cal = Calendar.getInstance().apply {
                 set(year, month, dayOfMonth)

@@ -1,6 +1,8 @@
 package com.example.roomieproject.activity
 
 import android.content.Intent
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.os.Bundle
 import android.util.Log
 import android.util.Patterns
@@ -19,12 +21,18 @@ import androidx.activity.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.example.roomieproject.firebase.GoogleLinkRequiredException
 import com.example.roomieproject.util.AuthState
 import com.example.roomieproject.viewmodel.AuthViewModel
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.FirebaseAuth
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.io.File
+import java.io.FileOutputStream
+import java.net.URL
 
 
 class LoginActivity : AppCompatActivity() {
@@ -84,27 +92,47 @@ class LoginActivity : AppCompatActivity() {
                         }
 
                         is AuthState.Success -> {
-                            val intent =
-                                Intent(this@LoginActivity, MenuActivity::class.java).apply {
-                                    flags =
-                                        Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                            val uid = state.uid
+                            val photoUrl = FirebaseAuth.getInstance().currentUser?.photoUrl?.toString()
+                            if (!photoUrl.isNullOrBlank()) {
+                                try {
+                                    withContext(Dispatchers.IO) {
+                                        downloadToFilesDir(photoUrl, uid)
+                                    }
+                                } catch (e: Exception) {
+                                    Log.e("LOGIN", "Download foto Google fallito", e)
                                 }
+                            }
+                            val intent = Intent(this@LoginActivity, MenuActivity::class.java).apply {
+                                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                            }
                             startActivity(intent)
+                            vm.setIdle()
                         }
 
                         is AuthState.Error -> {
-                            Toast.makeText(
-                                this@LoginActivity,
-                                state.e.message ?: "Errore registrazione",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                            vm.setIdle()
+                            val ex = state.e
+                            if (ex is GoogleLinkRequiredException && ex.signInMethods.contains("password")) {
+                                txtEmail.setText(ex.email)
+                                Toast.makeText(
+                                    this@LoginActivity,
+                                    "Email già registrata",
+                                    Toast.LENGTH_LONG
+                                ).show()
+                                vm.setIdle()
+                            } else {
+                                Toast.makeText(
+                                    this@LoginActivity,
+                                    state.e.message ?: "Errore",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                vm.setIdle()
+                            }
                         }
                     }
                 }
             }
         }
-        Log.d("LOGIN", "currentUser = ${FirebaseAuth.getInstance().currentUser?.uid}")
         forgotPpw.setOnClickListener {
             startActivity(Intent(this, ForgotPasswordActivity::class.java))
         }
@@ -139,6 +167,14 @@ class LoginActivity : AppCompatActivity() {
 
     }
 
+    private fun hasNetwork(): Boolean {
+        val cm = getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
+        val net = cm.activeNetwork ?: return false
+        val caps = cm.getNetworkCapabilities(net) ?: return false
+        return caps.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) &&
+                caps.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED)
+    }
+
     //verifico se utente già loggato per saltare login
     override fun onStart() {
         super.onStart()
@@ -149,18 +185,29 @@ class LoginActivity : AppCompatActivity() {
         var isValid = true
         Email.error = null
         Password.error = null
-
         //verifica email
         if (email.isBlank() || !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             Email.error = "Email non valida"
             isValid = false
         }
-
         //verifico password
         if (password.isBlank()) {
             Password.error = "Inserisci la password"
             isValid = false
         }
+        if (!hasNetwork()) {
+            Toast.makeText(this, "Network connection error", Toast.LENGTH_SHORT).show()
+            isValid = false
+        }
         return isValid
+    }
+
+    private fun downloadToFilesDir(url: String, uid: String) {
+        val dest = File(filesDir, "avatar_$uid.jpg")
+        URL(url).openStream().use { input ->
+            FileOutputStream(dest).use { output ->
+                input.copyTo(output)
+            }
+        }
     }
 }

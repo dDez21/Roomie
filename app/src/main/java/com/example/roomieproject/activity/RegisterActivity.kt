@@ -1,19 +1,17 @@
 package com.example.roomieproject.activity
 
-import android.Manifest
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
-import android.os.Build
+import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.util.Patterns
 import android.widget.ImageButton
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.roomieproject.R
@@ -23,11 +21,14 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import androidx.activity.viewModels
+import androidx.core.net.toUri
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.example.roomieproject.util.AuthState
 import kotlinx.coroutines.launch
+import java.io.File
+import java.io.FileOutputStream
 
 
 class RegisterActivity : AppCompatActivity() {
@@ -37,7 +38,7 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var Username: TextInputLayout
     private lateinit var txtUsername: TextInputEditText
     private lateinit var addProfilePic: FloatingActionButton
-    private var userPicUrl: android.net.Uri? = null
+    private var userPicUrl: Uri? = null
     private lateinit var Email: TextInputLayout
     private lateinit var txtEmail: TextInputEditText
     private lateinit var Password: TextInputLayout
@@ -45,22 +46,19 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var registerButton: MaterialButton
 
 
+    private val pickImage = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
+        if (uri != null) {
+            val localUri = try {copyImageToInternalStorage(uri)}
+            catch (e: Exception) {
+                Log.e("REGISTER", "Copia immagine fallita", e)
+                Toast.makeText(this, "Errore salvataggio foto", Toast.LENGTH_SHORT).show()
+                return@registerForActivityResult
+            }
 
-    // Per aprire la galleria
-    private val pickImage = registerForActivityResult(ActivityResultContracts.GetContent()) {
-        uri ->if (uri != null) {
-            userPicUrl = uri
-            addProfilePic.setImageURI(uri)  //Sostituisce l’icona del FAB con la foto scelta
+            userPicUrl = localUri
+            addProfilePic.setImageURI(localUri)
         }
     }
-
-    // Per chiedere i permessi
-    private val permissionRequest = registerForActivityResult(ActivityResultContracts.RequestPermission()) {
-        granted ->
-            if (granted) openGallery()
-            else Toast.makeText(this, "Permesso negato", Toast.LENGTH_SHORT).show()
-        }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,10 +73,8 @@ class RegisterActivity : AppCompatActivity() {
         }
 
         //associo riferimenti variabili istanziate
-        arrowBack = findViewById(R.id.arrowBack)
         Username = findViewById(R.id.username)
         txtUsername = findViewById(R.id.txtUsername)
-        addProfilePic = findViewById(R.id.addIcon)
         Email = findViewById(R.id.Email)
         txtEmail = findViewById(R.id.textEmail)
         Password = findViewById(R.id.Password)
@@ -87,12 +83,14 @@ class RegisterActivity : AppCompatActivity() {
 
 
         //imposto azioni
+        arrowBack = findViewById(R.id.arrowBack)
         arrowBack.setOnClickListener {
-            onBackPressedDispatcher.onBackPressed()
+        onBackPressedDispatcher.onBackPressed()
         }
 
+        addProfilePic = findViewById(R.id.addIcon)
         addProfilePic.setOnClickListener {
-            selectImage()
+            openGallery()
         }
 
         //gestione navigazione
@@ -101,29 +99,36 @@ class RegisterActivity : AppCompatActivity() {
                 vm.state.collect { state->
                     when (state) {
                         //evito sommarsi di chiamate
-                        AuthState.Idle -> registerButton.isEnabled = true
-                        AuthState.Loading -> registerButton.isEnabled = false
+                        AuthState.Idle -> {
+                            registerButton.isEnabled = true
+                            arrowBack.isEnabled = true
+                        }
+                        AuthState.Loading -> {
+                            registerButton.isEnabled = false
+                            arrowBack.isEnabled = false
+                        }
 
                         //utente creato
                         is AuthState.Success -> {
+                            persistAvatarForUid(state.uid)
                             val intent = Intent(this@RegisterActivity, MenuActivity::class.java).apply {
                                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                             }
                             startActivity(intent)
+                            vm.setIdle()
                         }
 
                         //errore
                         is AuthState.Error -> {
-                            Toast.makeText(
-                                this@RegisterActivity,
-                                state.e.message ?: "Errore registrazione",
-                                Toast.LENGTH_SHORT
-                            ).show()
+                            Log.e("REGISTER", "Register failed", state.e)
+                            Toast.makeText(this@RegisterActivity, state.e.localizedMessage ?: "Errore registrazione", Toast.LENGTH_LONG).show()
                             vm.setIdle()
+
                         }
+                    }
                 }
             }
-        }}
+        }
 
 
         registerButton.setOnClickListener {
@@ -132,14 +137,36 @@ class RegisterActivity : AppCompatActivity() {
             val password = txtPassword.text?.toString()?.trim().orEmpty()
 
             if (!validateInput(username, email, password)) return@setOnClickListener
-            vm.register(username, email, password, userPicUrl)
+            vm.register(username, email, password)
         }
+    }
+
+    private fun copyImageToInternalStorage(sourceUri: Uri): Uri {
+        val destFile = File(filesDir, "avatar_tmp_${System.currentTimeMillis()}.jpg")
+        contentResolver.openInputStream(sourceUri).use { input ->
+            requireNotNull(input) { "InputStream nullo" }
+            FileOutputStream(destFile).use { output -> input.copyTo(output) }
+        }
+        return destFile.toUri()
+    }
+
+    private fun persistAvatarForUid(uid: String) {
+        val current = userPicUrl ?: return
+        val srcPath = current.path ?: return
+        val src = File(srcPath)
+        if (!src.exists()) return
+        val dest = File(filesDir, "avatar_$uid.jpg")
+        src.copyTo(dest, overwrite = true)
+        src.delete()
+        userPicUrl = dest.toUri()
     }
 
     private fun hasNetwork(): Boolean {
         val cm = getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
-        val nc = cm.getNetworkCapabilities(cm.activeNetwork) ?: return false
-        return nc.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
+        val net = cm.activeNetwork ?: return false
+        val caps = cm.getNetworkCapabilities(net) ?: return false
+        return caps.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) &&
+                caps.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED)
     }
 
 
@@ -169,24 +196,6 @@ class RegisterActivity : AppCompatActivity() {
             isValid = false
         }
         return isValid
-    }
-
-
-
-    private fun selectImage() {
-        val permission = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            Manifest.permission.READ_MEDIA_IMAGES
-        } else {
-            Manifest.permission.READ_EXTERNAL_STORAGE
-        }
-
-        if (ContextCompat.checkSelfPermission(this, permission)
-            == PackageManager.PERMISSION_GRANTED
-        ) {
-            openGallery()
-        } else {
-            permissionRequest.launch(permission)
-        }
     }
 
     private fun openGallery() {

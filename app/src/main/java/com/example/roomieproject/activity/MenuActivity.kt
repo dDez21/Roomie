@@ -5,7 +5,6 @@ import android.view.View
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
@@ -16,6 +15,10 @@ import com.google.android.material.navigation.NavigationView
 import androidx.activity.addCallback
 import androidx.activity.viewModels
 import androidx.core.os.bundleOf
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updateLayoutParams
+import androidx.core.view.updatePadding
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -40,8 +43,21 @@ class MenuActivity : AppCompatActivity(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.activity_menu)
+
+        val topBar = findViewById<View>(R.id.top_bar)
+        val baseHeight = topBar.layoutParams.height
+        ViewCompat.setOnApplyWindowInsetsListener(topBar) { v, insets ->
+            val topInset = insets.getInsets(
+                WindowInsetsCompat.Type.statusBars() or WindowInsetsCompat.Type.displayCutout()
+            ).top
+            v.updatePadding(top = topInset)
+            v.updateLayoutParams {
+                height = baseHeight + topInset
+            }
+            insets
+        }
+        ViewCompat.requestApplyInsets(topBar)
 
         //imposto modo di navigazione
         navView = findViewById(R.id.navView)
@@ -80,6 +96,15 @@ class MenuActivity : AppCompatActivity(){
 
         //elenco gruppi
         val header = navView.getHeaderView(0)
+        val baseHeaderTopPadding = header.paddingTop
+        ViewCompat.setOnApplyWindowInsetsListener(header) { v, insets ->
+            val topInset = insets.getInsets(
+                WindowInsetsCompat.Type.statusBars() or WindowInsetsCompat.Type.displayCutout()
+            ).top
+            v.updatePadding(top = baseHeaderTopPadding + topInset)
+            insets
+        }
+        ViewCompat.requestApplyInsets(header)
         val groups = header.findViewById<RecyclerView>(R.id.rv_groups)
         val groupsAdapter = DrawerGroupsAdapter { groupId->
             drawerLayout.closeDrawer(GravityCompat.START)
@@ -99,11 +124,19 @@ class MenuActivity : AppCompatActivity(){
             navController.navigate(R.id.groupSectionFragment)
         }
 
-        //imposto drawer solo su menuFragment
-        navController.addOnDestinationChangedListener { _, destination, _ ->
+        //imposto drawer solo su  + caso alla creazione dell'utente
+        navController.addOnDestinationChangedListener { _, destination, args ->
+            val forcedNoGroup = args?.getBoolean("forcedNoGroup", false) ?: false
             when (destination.id) {
                 R.id.menuFragment -> showDrawerMode()
+                R.id.groupSectionFragment -> {
+                    if (forcedNoGroup) showNoBackMode() else showBackMode()
+                }
                 else -> showBackMode()
+            }
+            if (destination.id == R.id.menuFragment) {
+                showDrawerMode()
+                vm.refreshGroups()
             }
         }
 
@@ -115,7 +148,6 @@ class MenuActivity : AppCompatActivity(){
                 navController.popBackStack()
             }
         }
-
 
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -129,8 +161,7 @@ class MenuActivity : AppCompatActivity(){
                         UserState.NoGroup -> {
                             val current = navController.currentDestination?.id
                             if (current != R.id.groupSectionFragment) {
-                                navController.navigate(R.id.groupSectionFragment)
-                            }
+                                navController.navigate(R.id.groupSectionFragment, bundleOf("forcedNoGroup" to true))}
                         }
                         is UserState.Error -> {
                             Toast.makeText(
@@ -155,11 +186,11 @@ class MenuActivity : AppCompatActivity(){
                 if (!url.isNullOrBlank()) {
                     Glide.with(this@MenuActivity).load(url).into(userIcon)
                 } else {
-                    userIcon.setImageResource(R.drawable.circle_background)
+                    userIcon.setImageResource(R.drawable.user_logo)
                 }
             } catch (e: Exception) {
                 userName.text = "Utente"
-                userIcon.setImageResource(R.drawable.circle_background)
+                userIcon.setImageResource(R.drawable.user_logo)
             }
         }
     }
@@ -177,6 +208,14 @@ class MenuActivity : AppCompatActivity(){
     private fun showBackMode() {
         drawerMenu.visibility = View.GONE
         arrowBack.visibility = View.VISIBLE
+        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+    }
+
+
+    //caso nuovo utente
+    private fun showNoBackMode() {
+        drawerMenu.visibility = View.GONE
+        arrowBack.visibility = View.GONE
         drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
     }
 }
