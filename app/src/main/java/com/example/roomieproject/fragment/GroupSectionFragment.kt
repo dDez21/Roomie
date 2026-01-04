@@ -69,6 +69,8 @@ class GroupSectionFragment: Fragment(R.layout.fragment_group_section) {
             val groupName = txtGroupName.text?.toString()?.trim().orEmpty()
             viewLifecycleOwner.lifecycleScope.launch {
                 try {
+                    createGroup.isEnabled = false
+                    button.isEnabled = false
                     val groupId = vm.createGroup(groupName)
                     backMenu(groupId)
                 } catch (e: Exception) {
@@ -78,6 +80,8 @@ class GroupSectionFragment: Fragment(R.layout.fragment_group_section) {
                         Toast.LENGTH_SHORT
                     ).show()
                 }
+                createGroup.isEnabled = true
+                button.isEnabled = true
             }
         }
 
@@ -86,8 +90,16 @@ class GroupSectionFragment: Fragment(R.layout.fragment_group_section) {
         adapter = RequestsAdapter(
             onAccept = { g ->
                 viewLifecycleOwner.lifecycleScope.launch {
-                    val groupId = vm.acceptInvite(g.groupId)
-                    backMenu(groupId)
+                    try {
+                        val groupId = vm.acceptInvite(g.groupId)
+                        backMenu(groupId)
+                    } catch (e: Exception) {
+                        Toast.makeText(
+                            requireContext(),
+                            e.message ?: "Errore accettando invito",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
                 }
             },
             onDeny = { g -> vm.denyInvite(g.groupId) }

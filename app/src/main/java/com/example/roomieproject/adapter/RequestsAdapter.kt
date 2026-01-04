@@ -16,28 +16,34 @@ class RequestsAdapter(
     private val onDeny: (Group) -> Unit
 ): ListAdapter<Group, RequestsAdapter.RequestsViewHolder>(Diff){
 
-    class RequestsViewHolder(itemView: View) :RecyclerView.ViewHolder(itemView){
-        val groupName: TextView = itemView.findViewById(R.id.groupName)
-        val acceptBtn: ImageButton = itemView.findViewById(R.id.acceptGroup)
-        val denyBtn: ImageButton = itemView.findViewById(R.id.denyGroup)
+    inner class RequestsViewHolder(itemView: View) :RecyclerView.ViewHolder(itemView){
+        private val groupName: TextView = itemView.findViewById(R.id.groupName)
+        private val acceptBtn: ImageButton = itemView.findViewById(R.id.acceptGroup)
+        private val denyBtn: ImageButton = itemView.findViewById(R.id.denyGroup)
+
+        //estraggo inviti
+        fun bind(group: Group){
+            groupName.text = group.groupName
+            acceptBtn.setOnClickListener {onAccept(group)}
+            denyBtn.setOnClickListener {onDeny(group)}
+        }
     }
 
+    //singolo elemento
+    companion object Diff: DiffUtil.ItemCallback<Group>() {
+        override fun areItemsTheSame(oldItem: Group, newItem: Group): Boolean = oldItem.groupId == newItem.groupId
+        override fun areContentsTheSame(oldItem: Group, newItem: Group): Boolean = oldItem == newItem
+    }
+
+    //per creare riga
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RequestsViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.single_group_request, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.single_group_request, parent, false) //layout singola riga
         return RequestsViewHolder(view)
     }
 
+    //per riempire riga con i dati
     override fun onBindViewHolder(holder: RequestsViewHolder, position: Int) {
-        val group = getItem(position)
-        holder.groupName.text = group.groupName
-        holder.acceptBtn.setOnClickListener {onAccept(group)}
-        holder.denyBtn.setOnClickListener {onDeny(group)}
+        holder.bind(getItem(position))
     }
 
-    companion object {
-        private val Diff = object : DiffUtil.ItemCallback<Group>() {
-            override fun areItemsTheSame(oldItem: Group, newItem: Group): Boolean = oldItem.groupId == newItem.groupId
-            override fun areContentsTheSame(oldItem: Group, newItem: Group): Boolean = oldItem == newItem
-        }
-    }
 }

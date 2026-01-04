@@ -28,7 +28,7 @@ class AuthFirebase(
         //creo utente per firestore
         val user = User(
             userName = username,
-            userEmail = email,
+            userEmail = email
         )
         db.collection("users").document(uid).set(user, SetOptions.merge()).await() //salvo utente su firestore
         return uid

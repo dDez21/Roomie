@@ -10,7 +10,7 @@ data class Memory (
     val userId: String = "",  //id di chi ha fatto l'azione
     val actionType: ActionType = ActionType.UNSPECIFIED,  //tipo azione, a numero corrisponde frase
     val timestamp: Long = 0L,  //quando
-    val targetId: String? = null,  //eventuale utente che riceve
+    val targetId: String? = null,  //eventuale utente che riceve o nome spesa eliminata
     val amount: Long? = null  //eventuale cifra
 ){
     fun isValid(): Boolean =
@@ -20,9 +20,9 @@ data class Memory (
 
     enum class ActionType {
             UNSPECIFIED,
-            JOIN_GROUP,
             LEAVE_GROUP,
             EXPENSE_CREATED,
+            EXPENSE_DELETED,
             PAYMENT_SENT,
             COMMITMENT_CREATED,
             COMMITMENT_DELETED

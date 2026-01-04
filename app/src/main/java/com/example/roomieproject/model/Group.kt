@@ -11,8 +11,4 @@ data class Group(
     val groupName: String = "",
     val groupMembers: List<String> = emptyList(),
     val groupInvited: List<String> = emptyList()
-){
-    //verifico che i dati esistano
-    fun isValid(): Boolean =
-        groupName.isNotBlank()
-}
+)

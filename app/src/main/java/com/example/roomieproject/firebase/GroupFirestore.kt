@@ -1,7 +1,7 @@
 package com.example.roomieproject.firebase
 
-import android.util.Xml
 import com.example.roomieproject.model.Group
+import com.example.roomieproject.model.Memory
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
@@ -41,27 +41,23 @@ class GroupFirestore (
         }
     }
 
-
     //invito accettato
-    suspend fun acceptInvite(groupId: String){
-        val group = db.collection("groups").document(groupId)
+    suspend fun acceptInvite(groupId: String) {
+        val groupRef = db.collection("groups").document(groupId)
         val userUid = getUserUid()
         val userEmail = getUserEmail()
-
-        db.runTransaction {user ->
-            user.update(group, "groupInvited", FieldValue.arrayRemove(userEmail))
-            user.update(group, "groupUsers", FieldValue.arrayUnion(userUid))
-            null
-        }.await()
+        val batch = db.batch()
+        batch.update(groupRef, "groupInvited", FieldValue.arrayRemove(userEmail))
+        batch.update(groupRef, "groupMembers", FieldValue.arrayUnion(userUid))
+        batch.commit().await()
     }
-
 
     //invito rifiutato
     suspend fun denyInvite(groupId: String){
         val userEmail = getUserEmail()
         val group = db.collection("groups").document(groupId)
         db.runTransaction {user ->
-            user.update(group, "invitedUsers", FieldValue.arrayRemove(userEmail))
+            user.update(group, "groupInvited", FieldValue.arrayRemove(userEmail))
             null
         }.await()
     }

@@ -15,7 +15,11 @@
 
     <fragment
         android:id="@+id/memoryFragment"
-        android:name="com.example.roomieproject.fragment.MemoryFragment"/>
+        android:name="com.example.roomieproject.fragment.MemoryFragment">
+        <argument
+            android:name="groupId"
+            app:argType="string" />
+    </fragment>
 
     <fragment
         android:id="@+id/groupSectionFragment"

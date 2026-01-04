@@ -20,11 +20,10 @@ class UserFirestore (
     }
 
     //prendo uid utente
-    suspend fun getUserData(): Pair<String, String?> {
+    suspend fun getUserData(): String {
         val userUid = auth.currentUser?.uid?: throw IllegalStateException("Utente non loggato")
         val snap = db.collection("users").document(userUid).get().await()
         val name = snap.getString("userName") ?: ""
-        val logoUrl = snap.getString("userLogo")
-        return name to logoUrl
+        return name
     }
 }

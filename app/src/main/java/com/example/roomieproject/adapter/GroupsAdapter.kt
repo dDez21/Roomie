@@ -15,34 +15,6 @@ class DrawerGroupsAdapter(
     private val onGroupClick: (groupId: String) -> Unit
 ) : ListAdapter<Group, DrawerGroupsAdapter.GroupViewHolder>(Diff) {
 
-
-    //visualizzo gruppo scelto
-    private var groupSelectedId: String? = null
-    fun setSelected(groupId: String?){
-
-        if (groupSelectedId == groupId) return
-        val oldId = groupSelectedId
-        groupSelectedId = groupId
-        oldId?.let { id ->
-            val oldPos = currentList.indexOfFirst { it.groupId == id }
-            if (oldPos != -1) notifyItemChanged(oldPos)
-        }
-        groupId?.let { id ->
-            val newPos = currentList.indexOfFirst { it.groupId == id }
-            if (newPos != -1) notifyItemChanged(newPos)
-        }
-    }
-
-
-    //singolo elemento
-    object Diff : DiffUtil.ItemCallback<Group>() {
-        override fun areItemsTheSame(old: Group, new: Group) =
-            old.groupId == new.groupId
-
-        override fun areContentsTheSame(old: Group, new: Group) =
-            old == new
-    }
-
     //singola riga
     inner class GroupViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         private val groupName: TextView = itemView.findViewById(R.id.txtGroupName) //nome gruppo
@@ -58,10 +30,34 @@ class DrawerGroupsAdapter(
         }
     }
 
+    //visualizzo gruppo scelto
+    private var groupSelectedId: String? = null
+    fun setSelected(groupId: String?){
+        if (groupSelectedId == groupId) return
+        val oldId = groupSelectedId
+        groupSelectedId = groupId
+        oldId?.let { id ->
+            val oldPos = currentList.indexOfFirst { it.groupId == id }
+            if (oldPos != -1) notifyItemChanged(oldPos)
+        }
+        groupId?.let { id ->
+            val newPos = currentList.indexOfFirst { it.groupId == id }
+            if (newPos != -1) notifyItemChanged(newPos)
+        }
+    }
+
+    //singolo elemento
+    companion object Diff : DiffUtil.ItemCallback<Group>() {
+        override fun areItemsTheSame(old: Group, new: Group) =
+            old.groupId == new.groupId
+
+        override fun areContentsTheSame(old: Group, new: Group) =
+            old == new
+    }
+
     //per creare riga
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GroupViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.single_group, parent, false) //prendo layout singola riga
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.single_group, parent, false) //prendo layout singola riga
         return GroupViewHolder(view)
     }
 

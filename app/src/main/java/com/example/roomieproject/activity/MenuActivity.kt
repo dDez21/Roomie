@@ -22,11 +22,13 @@ import androidx.core.view.updatePadding
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.navOptions
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.roomieproject.adapter.DrawerGroupsAdapter
 import com.example.roomieproject.util.UserState
+import com.example.roomieproject.viewmodel.GroupViewModel
 import com.example.roomieproject.viewmodel.MenuViewModel
 import kotlinx.coroutines.launch
 
@@ -41,10 +43,13 @@ class MenuActivity : AppCompatActivity(){
     private lateinit var userName: TextView
     private lateinit var userIcon: ImageButton
     private lateinit var groupsAdapter: DrawerGroupsAdapter
+    private var groupId: String? = null
+    private val sharedGroupId: GroupViewModel by viewModels()  //per passare id gruppo a ogni fragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_menu)
+
 
         val topBar = findViewById<View>(R.id.top_bar)
         val baseHeight = topBar.layoutParams.height
@@ -113,11 +118,12 @@ class MenuActivity : AppCompatActivity(){
         }
         ViewCompat.requestApplyInsets(header)
         val groups = header.findViewById<RecyclerView>(R.id.rv_groups)
-        groupsAdapter = DrawerGroupsAdapter { groupId->
-            groupsAdapter.setSelected(groupId)
+        groupsAdapter = DrawerGroupsAdapter { gid->
+            groupId = gid
+            lifecycleScope.launch {sharedGroupId.selectedGroupId.emit(gid) }
+            groupsAdapter.setSelected(gid)
             drawerLayout.closeDrawer(GravityCompat.START)
-            val group = bundleOf("groupId" to groupId)
-            navController.navigate(R.id.menuFragment, group, androidx.navigation.navOptions {
+            navController.navigate(R.id.menuFragment, bundleOf("groupId" to gid), navOptions {
                 popUpTo(R.id.menuFragment) { inclusive = true }
                 launchSingleTop = true
             })
@@ -131,8 +137,6 @@ class MenuActivity : AppCompatActivity(){
             drawerLayout.closeDrawer(GravityCompat.START)
             navController.navigate(R.id.groupSectionFragment)
         }
-
-
 
         //chiude drawer se faccio indietro mentre è aperto
         onBackPressedDispatcher.addCallback(this) {
@@ -148,15 +152,29 @@ class MenuActivity : AppCompatActivity(){
                 vm.userState.collect { state ->
                     when (state) {
                         UserState.Idle -> Unit
+
                         UserState.Loading -> Unit
+
                         is UserState.HasGroups -> {
                             groupsAdapter.submitList(state.groups)
+                            // prendo id gruppo selezionato
+                            if (groupId != null && state.groups.none { it.groupId == groupId }) {
+                                groupId = null
+                            }
+                            // se non ho gruppo selezionato prendo primo gruppo
+                            if (groupId == null && state.groups.isNotEmpty()) {
+                                groupId = state.groups.first().groupId
+                                lifecycleScope.launch {sharedGroupId.selectedGroupId.emit(groupId)}
+                            }
+                            groupsAdapter.setSelected(groupId)
                         }
+
                         UserState.NoGroup -> {
                             val current = navController.currentDestination?.id
                             if (current != R.id.groupSectionFragment) {
                                 navController.navigate(R.id.groupSectionFragment, bundleOf("forcedNoGroup" to true))}
                         }
+
                         is UserState.Error -> {
                             Toast.makeText(
                                 this@MenuActivity,
@@ -175,9 +193,9 @@ class MenuActivity : AppCompatActivity(){
         navController.addOnDestinationChangedListener { _, destination, args ->
             val forcedNoGroup = args?.getBoolean("forcedNoGroup", false) ?: false
             when (destination.id) {
-                R.id.menuFragment -> showDrawerMode()
+                R.id.menuFragment -> showDrawerMode()  //drawer invece di freccia indietro nel menu
                 R.id.groupSectionFragment -> {
-                    if (forcedNoGroup) showNoBackMode() else showBackMode()
+                    if (forcedNoGroup) showNoBackMode() else showBackMode()  //quando effettuo primo login
                 }
                 else -> showBackMode()
             }
@@ -187,21 +205,26 @@ class MenuActivity : AppCompatActivity(){
                 showDrawerMode()
                 vm.refreshGroups()
             }
+            if (destination.id == R.id.memoryFragment){
+                val gid = args?.getString("groupId")
+            }
         }
-
-
     }
 
     //carico dati utente per top bar
     private fun loadUserData(){
         lifecycleScope.launch {
             try {
-                val (name, url) = vm.userData()
+                val name = vm.userData()
                 userName.text = if (name.isBlank()) "Utente" else name
-                if (!url.isNullOrBlank()) {
-                    Glide.with(this@MenuActivity).load(url).into(userIcon)
-                } else {
-                    userIcon.setImageResource(R.drawable.user_logo)
+                val localUri = vm.localAvatar(filesDir)
+                when {
+                    localUri != null -> {
+                        Glide.with(this@MenuActivity).load(localUri).into(userIcon)
+                    }
+                    else -> {
+                        userIcon.setImageResource(R.drawable.user_logo)
+                    }
                 }
             } catch (e: Exception) {
                 userName.text = "Utente"
